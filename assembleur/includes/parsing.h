@@ -14,13 +14,21 @@
 # define PARSING_H
 
 # include "corewar.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
-typedef struct s_env		t_env;
-struct						s_env
+
+
+typedef struct s_line		t_line;
+struct						s_line
 {
-	char					*name;
-	char					*comment;
-	t_func					*func;
+	t_list					*list_action;
+	char					*method;
+	struct s_line			*next;
 };
 
 typedef struct s_func		t_func;
@@ -31,12 +39,22 @@ struct						s_func
 	struct s_func			*next;
 };
 
-typedef struct s_line		t_line;
-struct						s_line
+typedef struct s_env		t_env;
+struct						s_env
 {
-	t_list					*list_action;
-	char					*method;
-	struct s_line			*next;
+	char					*name;
+	char					*comment;
+	t_func					*func;
 };
+
+void	open_line(char *fichier, t_env *e);
+
+
+
+
+
+
+
+
 
 #endif

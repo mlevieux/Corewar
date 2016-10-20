@@ -12,10 +12,20 @@
 
 #include "corewar.h"
 
+void	init_env(t_env *e)
+{
+	e->name = NULL;
+	e->comment = NULL;
+	e->func = NULL;
+}
+
 int		main(int argc, char **argv)
 {
+	t_env	e;
+
 	if (argc < 2)
 		asm_error("Need more argument!");
-	(void)argv;
+	init_env(&e);
+	open_line(argv[1], &e);
 	return (0);
 }
