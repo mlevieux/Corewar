@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.h                                          :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/20 17:24:22 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/20 18:07:01 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COREWAR_H
-# define COREWAR_H
+#ifndef PARSING_H
+# define PARSING_H
 
-# include "libft.h"
-# include "parsing.h"
+# include "corewar.h"
 
-// typedef struct s_res_lst	t_res_lst;
-// struct						s_res_lst
-// {
-// 	t_list					*dir;
-// 	t_list					*file;
-// 	t_list					*error;
-// };
+typedef struct s_env		t_env;
+struct						s_env
+{
+	char					*name;
+	char					*comment;
+	t_func					*func;
+};
 
-void		asm_error(char *str);
+typedef struct s_func		t_func;
+struct						s_func
+{
+	char					*name_func;
+	t_line					*lines;
+	struct s_func			*next;
+};
 
+typedef struct s_line		t_line;
+struct						s_line
+{
+	t_list					*list_action;
+	char					*method;
+	struct s_line			*next;
+};
 
 #endif

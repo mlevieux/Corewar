@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   asm_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/19 12:59:13 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/20 17:15:45 by vlancien         ###   ########.fr       */
+/*   Created: 2016/10/20 17:09:56 by vlancien          #+#    #+#             */
+/*   Updated: 2016/10/20 17:15:31 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		main(int argc, char **argv)
+void		asm_error(char *str)
 {
-	if (argc < 2)
-		asm_error("Need more argument!");
-	(void)argv;
-	return (0);
+	ft_printf("%s\n", str);
+	exit(-1);
 }
