@@ -90,8 +90,9 @@ void	stock_line(char *str, t_env *e)
 
 void	open_line(char *fichier, t_env *e)
 {
-	int		fd;
 	char	*line;
+	int		fd;
+	off_t	lenght_file;
 
 	fd = open(fichier, O_RDONLY);
 	if (fd == -1)
@@ -104,3 +105,6 @@ void	open_line(char *fichier, t_env *e)
 		asm_error("close_error");
 	printf("%s->%s\n", e->name, e->comment);
 }
+
+	// if ((lenght_file =  lseek(fd, 0, SEEK_END)) > CHAMP_MAX_SIZE) //a faire sur le binaire
+		// asm_error("fichier trop long");

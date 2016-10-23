@@ -29,13 +29,14 @@ struct						s_line
 	char					*info1;
 	char					*info2;
 	char					*info3;
+	int						nb_info;
 	struct s_line			*next;
 };
 
 typedef struct s_func		t_func;
 struct						s_func
 {
-	char					*name_func; // l2: ou live;
+	char					*label; // l2: ou live;
 	t_line					*lines; //pointeur sur struct
 	struct s_func			*next;
 };
