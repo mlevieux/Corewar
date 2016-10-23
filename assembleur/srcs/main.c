@@ -17,6 +17,7 @@ void	init_env(t_env *e)
 	e->name = NULL;
 	e->comment = NULL;
 	e->func = NULL;
+	e->suite = 0;
 }
 
 int		main(int argc, char **argv)

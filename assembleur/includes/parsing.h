@@ -22,29 +22,31 @@
 #include <fcntl.h>
 
 
-
 typedef struct s_line		t_line;
 struct						s_line
 {
-	t_list					*list_action;
-	char					*method;
+	char					*method; // sti and live zjmp
+	char					*info1;
+	char					*info2;
+	char					*info3;
 	struct s_line			*next;
 };
 
 typedef struct s_func		t_func;
 struct						s_func
 {
-	char					*name_func;
-	t_line					*lines;
+	char					*name_func; // l2: ou live;
+	t_line					*lines; //pointeur sur struct
 	struct s_func			*next;
 };
 
 typedef struct s_env		t_env;
 struct						s_env
 {
-	char					*name;
-	char					*comment;
-	t_func					*func;
+	char					*name; // .name
+	char					*comment; // .comment
+	int						suite; // instruction fini ou non
+	t_func					*func; //pointeur sur struct
 };
 
 void	open_line(char *fichier, t_env *e);
