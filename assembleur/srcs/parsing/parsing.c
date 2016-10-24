@@ -73,6 +73,14 @@ void	name_comment(char *str, t_env *e)
 	free_2d_tab(tab, 2); // veriffier les leaks
 }
 
+void	other(char *str, t_env *e)
+{
+	str = NULL;
+	e->name = NULL;
+
+
+}
+
 void	stock_line(char *str, t_env *e)
 {
 	if ((str[0] == 0) || (str[0] == '#'))
@@ -92,7 +100,6 @@ void	open_line(char *fichier, t_env *e)
 {
 	char	*line;
 	int		fd;
-	off_t	lenght_file;
 
 	fd = open(fichier, O_RDONLY);
 	if (fd == -1)
@@ -106,5 +113,6 @@ void	open_line(char *fichier, t_env *e)
 	printf("%s->%s\n", e->name, e->comment);
 }
 
+	// off_t	lenght_file;
 	// if ((lenght_file =  lseek(fd, 0, SEEK_END)) > CHAMP_MAX_SIZE) //a faire sur le binaire
 		// asm_error("fichier trop long");
