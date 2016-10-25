@@ -46,7 +46,9 @@ struct						s_env
 {
 	char					*name; // .name
 	char					*comment; // .comment
+	char					*name_file; //nom du .cor en sortie
 	int						suite; // instruction fini ou non
+	int						y_line;
 	t_func					*func; //pointeur sur struct
 };
 
