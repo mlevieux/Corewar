@@ -12,6 +12,21 @@
 
 #include "corewar.h"
 
+void	create_file(t_env *e)
+{
+	int		fd;
+
+
+	if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
+		ft_printf("%s\n", e->name_file);
+	ft_putstr_fd("00ea83f37a6f726b", fd);
+
+
+
+
+
+}
+
 void	init_env(t_env *e)
 {
 	e->name = NULL;
@@ -19,6 +34,7 @@ void	init_env(t_env *e)
 	e->name_file = NULL;
 	e->func = NULL;
 	e->suite = 0;
+	e->y_line = 0;
 }
 
 char	*parsename(char *argv)
@@ -46,7 +62,6 @@ char	*parsename(char *argv)
 	name_file[c + 2] = 'o';
 	name_file[c + 3] = 'r';
 	name_file[c + 4] = '\0';
-	printf("%s\n", name_file);
 	return (name_file);
 }
 
@@ -57,10 +72,11 @@ int		main(int argc, char **argv)
 
 	if (argc < 2)
 		asm_error("asm: need more argument!");
+	init_env(&e);
 	if (!(e.name_file = parsename(argv[1])))
 		asm_error("asm: wrong file extension!");
 	printf("%s\n", e.name_file);
-	init_env(&e);
 	//open_line(argv[1], &e);
+	create_file(&e);
 	return (0);
 }
