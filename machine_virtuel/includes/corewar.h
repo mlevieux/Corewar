@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/21 22:35:27 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/24 10:38:11 by viko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ struct					s_env
 void		vm_error(char *str);
 void		parsing_arg(char **arg, t_env *e);
 void		reading_file(t_env *e, int x);
+void	read_instruction(t_env *e, int x);
 #endif

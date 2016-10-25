@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/21 18:07:34 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/22 03:17:01 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/24 10:31:45 by viko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,5 @@ void	reading_file(t_env *e, int x)
 	e->players[x].name = read_name(e->players[x].file);
 	e->players[x].comment = read_comment(e->players[x].file);
 	read_magic(e->players[x].file);
+	read_instruction(e, x);
 }
