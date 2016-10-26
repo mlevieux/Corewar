@@ -6,58 +6,67 @@
 /*   By: viko <viko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 09:02:53 by viko              #+#    #+#             */
-/*   Updated: 2016/10/24 13:58:34 by viko             ###   ########.fr       */
+/*   Updated: 2016/10/26 06:48:50 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+int		instruct_tab_value(char *str)
+{
+	int		value;
+
+	value = -1;
+	if (str[0] == '0' && str[1] > '0' && str[1] <= '9')
+		value = str[1] - '0';
+	else if (str[0] == '1' && str[1] == '0')
+		value = 10;
+	else if (str[0] == '0' && str[1] >= 'a' && str[1] <= 'f')
+		value = str[1] - '0' - '0' + 10;
+	return (value);
+}
+
+int		get_func_method(int jump, char **action_, char *tmp)
+{
+	char	status_code[17][16] = {"None", "live","ld","st","add","sub","and","or","xor","zjump","aff","ldi","sti","fork","lld","lldi","lfork"};
+	int		jump_mod[17] = {0,5,7,5,5,0,8,0,8,3,0,0,7,3,0,0,0};
+	int		index;
+
+	index = 0;
+	if (!jump && (index = instruct_tab_value(tmp)) != -1 && index > 0 && index < 17)
+	{
+		(*action_) = status_code[index];
+		jump = jump_mod[index];
+		/// erreur avec le 0b 64 r1 %:122 r2 ....
+	}
+	return (jump);
+}
 
 void	read_instruction(t_env *e, int x)
 {
 	char	*tmp = NULL;
 	int		byte;
 	char	c = 0;
+	char	*action_;
+	int		saut = 0;
+	int		pair = 0;
 
-	byte = 2192;
-	while (1)
+	action_ = malloc(sizeof(char) * 8);
+	byte = BYTE_START_CODE;
+	while (byte < (int)e->players[x].size)
 	{
 		c = e->players[x].file[byte];
-		printf("%s\n", (tmp = print_hexa(c, byte)));
-		if  (!ft_strcmp("01", tmp))
-			printf("live\n");
-		if  (!ft_strcmp("02", tmp))
-			printf("ld\n");
-		if  (!ft_strcmp("03", tmp))
-			printf("st\n");
-		if  (!ft_strcmp("04", tmp))
-			printf("add\n");
-		if  (!ft_strcmp("05", tmp))
-			printf("sub\n");
-		if  (!ft_strcmp("06", tmp))
-			printf("and\n");
-		if  (!ft_strcmp("07", tmp))
-			printf("or\n");
-		if  (!ft_strcmp("08", tmp))
-			printf("xor\n");
-		if  (!ft_strcmp("09", tmp))
-			printf("zjump\n");
-		if  (!ft_strcmp("10", tmp))
-			printf("aff\n");
-		if  (!ft_strcmp("0a", tmp))
-			printf("ldi\n");
-		if  (!ft_strcmp("0b", tmp))
-			printf("sti\n");
-		if  (!ft_strcmp("0c", tmp))
-			printf("fork\n");
-		if  (!ft_strcmp("0d", tmp))
-			printf("lld\n");
-		if  (!ft_strcmp("0e", tmp))
-			printf("lldi\n");
-		if  (!ft_strcmp("0f", tmp))
-			printf("lfork\n");
-		hex_to_bin_quad(tmp);
+		tmp = print_hexa(c, byte);
+		saut = get_func_method(saut, &action_, tmp);
+		printf("%s ", tmp);
+		saut--;
+		if (saut == 0){
+			printf("\n");
+			pair = 0;
+		}
 		byte++;
-		if (byte == 2200)
-			break;
+		free(tmp);
 	}
+	printf("\n");
+
 }

@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/24 10:38:11 by viko             ###   ########.fr       */
+/*   Updated: 2016/10/26 02:35:53 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 # define TRUE 1
 # define FALSE 0
+
+# define BYTE_START_CODE 2192
 
 typedef struct s_flag	t_flag;
 struct					s_flag
