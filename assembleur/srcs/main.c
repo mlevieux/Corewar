@@ -21,23 +21,14 @@
 //   char				comment[COMMENT_LENGTH + 1];
 // }					header_t;
 
+unsigned int	little_to_big(unsigned int little)
+{
+	unsigned int	big;
 
- // int             fd;
- //    char            name[PROG_NAME_LENGTH + 10];
- //    char            comment[COMMENT_LENGTH];
- //    header_t        *header =NULL;
-
- //    header = (header_t*)malloc(sizeof(header_t));
- //    // ft_bzero(name, PROG_NAME_LENGTH);
- //    // ft_bzero(comment, COMMENT_LENGTH);
- //    // ft_strcpy(name, "zork");
- //    ft_strcpy(header->prog_name, name);
- //    ft_strcpy(header->comment, "comment!");
- //    ft_memset(header->prog_name, 0, PROG_NAME_LENGTH);
- //    if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
- //        ft_printf("%s\n", e->name_file);
- //    write(fd, header, sizeof(header));
- //    // ft_putstr_fd("00ea83f37a6f726b", fd);
+	big = ((little >> 24 )& 0xff) | ((little << 8) & 0xff0000) |
+	((little >> 8) & 0xff00) | ((little << 24 )& 0xff000000);
+	return (big);
+}
 
 void	create_file(t_env *e)
 {
@@ -49,13 +40,15 @@ void	create_file(t_env *e)
 
 	header.prog_size = 0; // a calculer
 
-	header.magic = COREWAR_EXEC_MAGIC;
+
+	header.magic = little_to_big(COREWAR_EXEC_MAGIC);
 	ft_strcpy(header.prog_name ,e->name);
 	ft_strcpy(header.comment ,e->comment); 
-
 	if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		ft_printf("%s\n", e->name_file);
 	write(fd, &header, sizeof(header));
+	if (close(fd) != 0)
+		asm_error("close_error_.cor");
 }
 
 void	init_env(t_env *e)

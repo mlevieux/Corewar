@@ -45,7 +45,7 @@ void			print_2d_tab(char **tab, int size)
 
 void	name_comment(char *str, t_env *e)
 {
-	char **tab;
+	char	**tab;
 
 	tab = ft_strsplit(str, '\"');
 	if ((str[1] == 'n') && (str[2] == 'a') && (str[3] == 'm') && (str[4] == 'e'))
@@ -74,9 +74,21 @@ void	name_comment(char *str, t_env *e)
 
 void	other(char *str, t_env *e)
 {
-	str = NULL;
-	e->name = NULL;
+	char	**tab;
+	int		a;
+	
 
+	tab = ft_strsplit(str, ' ');
+	a = 0;
+	while ()
+	{
+		if (tab[(ft_strlen(tab[a] - 1))] == ':')
+		{
+			create_label(tab[a], e)
+		}
+		else
+		
+	}
 
 }
 
@@ -91,8 +103,8 @@ void	stock_line(char *str, t_env *e)
 	}
 	else if (str[0] == '.')
 		name_comment(str, e);
-	// else
-	// 	other(str, e);
+	else
+		other(str, e);
 }
 
 void	open_line(char *fichier, t_env *e)
