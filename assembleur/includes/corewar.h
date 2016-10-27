@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "parsing.h"
+# include "../../op.h"
 
 // typedef struct s_res_lst	t_res_lst;
 // struct						s_res_lst

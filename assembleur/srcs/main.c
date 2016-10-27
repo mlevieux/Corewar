@@ -12,19 +12,43 @@
 
 #include "corewar.h"
 
+
+// typedef struct		header_s
+// {
+//   unsigned int		magic;
+//   char				prog_name[PROG_NAME_LENGTH + 1];
+//   unsigned int		prog_size;
+//   char				comment[COMMENT_LENGTH + 1];
+// }					header_t;
+
+unsigned int	little_to_big(unsigned int little)
+{
+	unsigned int	big;
+
+	big = ((little >> 24 )& 0xff) | ((little << 8) & 0xff0000) |
+	((little >> 8) & 0xff00) | ((little << 24 )& 0xff000000);
+	return (big);
+}
+
 void	create_file(t_env *e)
 {
-	int		fd;
+	int			fd;
+	header_t	header;
+
+	ft_bzero(header.prog_name, PROG_NAME_LENGTH + 1);
+	ft_bzero(header.comment, COMMENT_LENGTH + 1);
+
+	header.prog_size = 0; // a calculer
 
 
+	header.magic = little_to_big(COREWAR_EXEC_MAGIC);
+	ft_strcpy(header.prog_name ,e->name);
+	ft_strcpy(header.comment ,e->comment); 
 	if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		ft_printf("%s\n", e->name_file);
-	ft_putstr_fd("00ea83f37a6f726b", fd);
-
-
-
-
-
+	write(fd, &header, sizeof(header));
+	if (close(fd) != 0)
+		asm_error("close_error_.cor");
 }
 
 void	init_env(t_env *e)
@@ -68,15 +92,15 @@ char	*parsename(char *argv)
 
 int		main(int argc, char **argv)
 {
-	t_env	e;
+	t_env		e;
 
 	if (argc < 2)
-		asm_error("asm: need more argument!");
+		asm_error("Usage: ./asm <sourcefile.s>");
 	init_env(&e);
 	if (!(e.name_file = parsename(argv[1])))
 		asm_error("asm: wrong file extension!");
 	printf("%s\n", e.name_file);
-	//open_line(argv[1], &e);
+	open_line(argv[1], &e);
 	create_file(&e);
 	return (0);
 }
