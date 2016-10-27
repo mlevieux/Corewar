@@ -5,6 +5,7 @@ CC							= gcc
 C_DIR 						= srcs/
 C_PARSING_DIR 				= srcs/parsing/
 C_FUNC_ERROR 				= srcs/func_error/
+C_CURSE_DIR 				= srcs/ncurse/
 
 O_DIR 						= o/
 LIBFT 						= libft/
@@ -16,7 +17,7 @@ FLAGS =  -Wall -Werror -Wextra
 
 LINKS = $(H_DIR) $(LIBS_H_DIR)
 
-C_FILES = $(shell ls -1 $(C_DIR) $(C_PARSING_DIR) $(C_FUNC_ERROR)| grep "\.c")
+C_FILES = $(shell ls -1 $(C_DIR) $(C_PARSING_DIR) $(C_FUNC_ERROR) $(C_CURSE_DIR) | grep "\.c")
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 
 all:
@@ -56,6 +57,12 @@ $(O_DIR)%.o: $(C_FUNC_ERROR)%.c
 	|| (printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;31m$@\033[0;0m\n" "$<" \
 		&& exit 1)
 
+$(O_DIR)%.o: $(C_CURSE_DIR)%.c
+	@mkdir $(O_DIR) 2> /dev/null || echo "" > /dev/null
+	@$(CC) $(FLAGS) $(LINKS) -o $@ -c $< \
+	&& printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;32m$@\033[0;0m\n" "$<" \
+	|| (printf "\033[0;0m%-24s\033[1;30m-->>	\033[0;31m$@\033[0;0m\n" "$<" \
+		&& exit 1)
 clean:
 	@rm $(O_FILES) $(O_DIR2) 2> /dev/null || echo "" > /dev/null
 	@rmdir -p $(O_DIR) $(O_DIR2) 2> /dev/null || echo "" > /dev/null

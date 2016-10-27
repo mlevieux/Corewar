@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/26 02:35:53 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/27 17:29:13 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ struct					s_env
 
 };
 
+# include "n_curse.h"
+
 void		vm_error(char *str);
 void		parsing_arg(char **arg, t_env *e);
 void		reading_file(t_env *e, int x);
-void	read_instruction(t_env *e, int x);
+void		read_instruction(t_env *e, int x);
 #endif

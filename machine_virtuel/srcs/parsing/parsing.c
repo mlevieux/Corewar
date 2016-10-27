@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:57:55 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/25 18:24:46 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/27 17:32:11 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int		is_cor(char *str)
 void	get_flag_prog(char *arg, t_env *e)
 {
 	(void)e;
-	if (flag(arg))
+	if (flag(arg)){
 		printf(""RED"%s\n"NORM"", arg);
+		e->flag.flag_n = 1;
+	}
 	else if (e->active_players != MAX_PLAYERS && is_cor(arg))
 	{
 		e->players[e->active_players].path = arg;

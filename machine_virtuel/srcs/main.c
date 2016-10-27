@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 12:59:13 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/27 01:40:30 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/27 17:24:03 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int		main(int argc, char **argv)
 	// }
 
 	// printf("%d\n", resultat);
+
+	
+	if (e->flag.flag_n)
+		n_curse(e);
 	free_fighter(e);
 	free(e);
 	return (0);
