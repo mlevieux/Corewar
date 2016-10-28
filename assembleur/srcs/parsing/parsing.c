@@ -72,24 +72,70 @@ void	name_comment(char *str, t_env *e)
 	free_2d_tab(tab, 2); // veriffier les leaks
 }
 
+void	create_label(char *str, t_env *e)
+{
+	t_func	*label;
+	t_func	*tmp;
+
+	label = (t_func *)malloc(sizeof(t_func));
+	if (!label)
+		asm_error("malloc label error");
+
+	tmp = e->func;
+	e->func = label;
+	label->next = tmp;
+	label->label = str;
+	label->line = NULL;
+}
+
+void	create_method(char **tab, t_line *first_line)
+{
+	t_line	*line;
+	t_line	*tmp;
+
+	line = NULL;
+	line = (t_line *)malloc(sizeof(t_line));
+	if (!line)
+		asm_error("malloc line error");
+	line->method = tab[0];
+	line->info1 = tab[1];
+	line->info2 = tab[2];
+	line->info3 = tab[3];
+	line->next = NULL;
+	if (first_line == NULL)
+		first_line = line;
+	else
+	{
+		tmp = first_line;
+		while (tmp->next != NULL)
+		{		
+			tmp = tmp->next;
+		}
+		tmp->next = line;
+	}
+}
+
 void	other(char *str, t_env *e)
 {
 	char	**tab;
 	int		a;
-	
+	int		b;
 
 	tab = ft_strsplit(str, ' ');
 	a = 0;
-	while ()
+	while (tab[a])
 	{
-		if (tab[(ft_strlen(tab[a] - 1))] == ':')
+		b = ft_strlen(tab[a]);
+		if (tab[a][b - 1] == ':')
 		{
-			create_label(tab[a], e)
+			create_label(tab[a], e);
 		}
 		else
-		
+		{
+			create_method(tab, e->func->line);
+		}
+		a++;
 	}
-
 }
 
 void	stock_line(char *str, t_env *e)

@@ -37,7 +37,7 @@ typedef struct s_func		t_func;
 struct						s_func
 {
 	char					*label; // l2: ou live;
-	t_line					*lines; //pointeur sur struct
+	t_line					*line; //pointeur sur struct
 	struct s_func			*next;
 };
 
