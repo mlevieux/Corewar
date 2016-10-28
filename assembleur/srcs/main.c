@@ -100,17 +100,12 @@ void	print_all(t_env *e)
 		if (tmp_label)
 			printf("%s\n", tmp_label->label);
 		tmp_method = tmp_label->line;
-		if (tmp_method)
-		while (tmp_method->next != NULL)
+		while (tmp_method != NULL)
 		{
-			if (tmp_method)
-				printf("%s %s %s %s\n", tmp_method->method,
-					tmp_method->info1, tmp_method->info2, tmp_method->info3);
-			tmp_method = tmp_method->next;
-		}
-		if (tmp_method)
 			printf("%s %s %s %s\n", tmp_method->method,
 				tmp_method->info1, tmp_method->info2, tmp_method->info3);
+			tmp_method = tmp_method->next;
+		}
 		tmp_label = tmp_label->next;
 	}
 }
