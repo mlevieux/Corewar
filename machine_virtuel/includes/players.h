@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/21 17:13:17 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/26 02:35:30 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/28 18:28:35 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ struct					s_player
 	char				*comment;
 	char				*path;
 	unsigned long		size;
+	int					start;
+	int					size_func;
 	char				*file;
 };
 

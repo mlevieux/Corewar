@@ -6,7 +6,7 @@
 /*   By: viko <viko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 09:02:53 by viko              #+#    #+#             */
-/*   Updated: 2016/10/27 03:20:42 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/10/28 19:33:48 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	read_instruction(t_env *e, int x)
 	byte = BYTE_START_CODE;
 	while (byte < (int)e->players[x].size)
 	{
+		e->players[x].size_func = ((int)e->players[x].size - BYTE_START_CODE) * 2;
 		c = e->players[x].file[byte];
 		tmp = print_hexa(c, byte);
 		saut = get_func_method(saut, &action_, tmp);
 		printf("%s ", tmp);
-		// hex_to_bin_quad(tmp);
 		saut--;
 		if (saut == 0){
 			printf("\n");
