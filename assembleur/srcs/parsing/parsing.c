@@ -72,70 +72,42 @@ void	name_comment(char *str, t_env *e)
 	free_2d_tab(tab, 2); // veriffier les leaks
 }
 
-void	create_label(char *str, t_env *e)
+void	push_back(char *str, t_func *head)
 {
-	t_func	*label;
 	t_func	*tmp;
+	t_func	*new;
 
-	label = (t_func *)malloc(sizeof(t_func));
-	if (!label)
-		asm_error("malloc label error");
-
-	tmp = e->func;
-	e->func = label;
-	label->next = tmp;
-	label->label = str;
-	label->line = NULL;
-}
-
-void	create_method(char **tab, t_line *first_line)
-{
-	t_line	*line;
-	t_line	*tmp;
-
-	line = NULL;
-	line = (t_line *)malloc(sizeof(t_line));
-	if (!line)
-		asm_error("malloc line error");
-	line->method = tab[0];
-	line->info1 = tab[1];
-	line->info2 = tab[2];
-	line->info3 = tab[3];
-	line->next = NULL;
-	if (first_line == NULL)
-		first_line = line;
-	else
+	new = (t_func *)malloc(sizeof(t_func));
+	if (!new)
+		asm_error("new malloc error");
+	new->line = str;
+	new->next = NULL;
+	tmp = head;
+	while (tmp->next != NULL)
 	{
-		tmp = first_line;
-		while (tmp->next != NULL)
-		{		
-			tmp = tmp->next;
-		}
-		tmp->next = line;
+		tmp = tmp->next;
 	}
+	tmp->next = new;
 }
-
+t_func	*create_head(char *str)
+{
+	t_func	*new;
+	new = (t_func *)malloc(sizeof(t_func));
+	if (!new)
+		asm_error("head malloc error");
+	new->line = str;
+	new->next = NULL;
+	return (new);
+}
 void	other(char *str, t_env *e)
 {
-	char	**tab;
-	int		a;
-	int		b;
-
-	tab = ft_strsplit(str, ' ');
-	a = 0;
-	while (tab[a])
+	if (e->func == NULL)
 	{
-		b = ft_strlen(tab[a]);
-		if (tab[a][b - 1] == ':')
-		{
-			create_label(tab[a], e);
-		}
-		else
-		{
-			create_method(tab, e->func->line);
-		}
-		a++;
+		printf("other\n");
+		e->func = create_head(str);
 	}
+	else
+		push_back(str, e->func);
 }
 
 void	stock_line(char *str, t_env *e)

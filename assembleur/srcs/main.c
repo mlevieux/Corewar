@@ -89,24 +89,15 @@ char	*parsename(char *argv)
 	return (name_file);
 }
 
-void	print_all(t_env *e)
+void	print_all(t_func *head)
 {
-	t_func	*tmp_label;
-	t_line	*tmp_method;
+	t_func	*tmp;
 
-	tmp_label = e->func;
-	while (tmp_label != NULL)
-	{	
-		if (tmp_label)
-			printf("%s\n", tmp_label->label);
-		tmp_method = tmp_label->line;
-		while (tmp_method != NULL)
-		{
-			printf("%s %s %s %s\n", tmp_method->method,
-				tmp_method->info1, tmp_method->info2, tmp_method->info3);
-			tmp_method = tmp_method->next;
-		}
-		tmp_label = tmp_label->next;
+	tmp = head;
+	while (tmp != NULL)
+	{
+		printf("%s\n", tmp->line);
+		tmp = tmp->next;
 	}
 }
 
@@ -122,6 +113,6 @@ int		main(int argc, char **argv)
 	printf("%s\n", e.name_file);
 	open_line(argv[1], &e);
 	create_file(&e);
-	print_all(&e);
+	print_all(e.func);
 	return (0);
 }

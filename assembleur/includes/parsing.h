@@ -22,22 +22,23 @@
 #include <fcntl.h>
 
 
-typedef struct s_line		t_line;
-struct						s_line
-{
-	char					*method; // sti and live zjmp
-	char					*info1;
-	char					*info2;
-	char					*info3;
-	int						nb_info;
-	struct s_line			*next;
-};
+// typedef struct s_line		t_line;
+// struct						s_line
+// {
+// 	char					*method; // sti and live zjmp
+// 	char					*info1;
+// 	char					*info2;
+// 	char					*info3;
+// 	int						nb_info;
+// 	struct s_line			*next;
+// };
 
 typedef struct s_func		t_func;
 struct						s_func
 {
-	char					*label; // l2: ou live;
-	t_line					*line; //pointeur sur struct
+	// char					*label; // l2: ou live;
+	// t_line					*line; //pointeur sur struct
+	char					*line;
 	struct s_func			*next;
 };
 
