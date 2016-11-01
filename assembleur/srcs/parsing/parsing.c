@@ -72,24 +72,42 @@ void	name_comment(char *str, t_env *e)
 	free_2d_tab(tab, 2); // veriffier les leaks
 }
 
+void	push_back(char *str, t_func *head)
+{
+	t_func	*tmp;
+	t_func	*new;
+
+	new = (t_func *)malloc(sizeof(t_func));
+	if (!new)
+		asm_error("new malloc error");
+	new->line = str;
+	new->next = NULL;
+	tmp = head;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+	}
+	tmp->next = new;
+}
+t_func	*create_head(char *str)
+{
+	t_func	*new;
+	new = (t_func *)malloc(sizeof(t_func));
+	if (!new)
+		asm_error("head malloc error");
+	new->line = str;
+	new->next = NULL;
+	return (new);
+}
 void	other(char *str, t_env *e)
 {
-	char	**tab;
-	int		a;
-	
-
-	tab = ft_strsplit(str, ' ');
-	a = 0;
-	while ()
+	if (e->func == NULL)
 	{
-		if (tab[(ft_strlen(tab[a] - 1))] == ':')
-		{
-			create_label(tab[a], e)
-		}
-		else
-		
+		printf("other\n");
+		e->func = create_head(str);
 	}
-
+	else
+		push_back(str, e->func);
 }
 
 void	stock_line(char *str, t_env *e)

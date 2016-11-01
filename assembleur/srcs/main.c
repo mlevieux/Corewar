@@ -42,8 +42,8 @@ void	create_file(t_env *e)
 
 
 	header.magic = little_to_big(COREWAR_EXEC_MAGIC);
-	ft_strcpy(header.prog_name ,e->name);
-	ft_strcpy(header.comment ,e->comment); 
+	ft_strncpy(header.prog_name ,e->name,PROG_NAME_LENGTH);
+	ft_strncpy(header.comment ,e->comment, COMMENT_LENGTH);
 	if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		ft_printf("%s\n", e->name_file);
 	write(fd, &header, sizeof(header));
@@ -89,6 +89,17 @@ char	*parsename(char *argv)
 	return (name_file);
 }
 
+void	print_all(t_func *head)
+{
+	t_func	*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		printf("%s\n", tmp->line);
+		tmp = tmp->next;
+	}
+}
 
 int		main(int argc, char **argv)
 {
@@ -102,5 +113,6 @@ int		main(int argc, char **argv)
 	printf("%s\n", e.name_file);
 	open_line(argv[1], &e);
 	create_file(&e);
+	print_all(e.func);
 	return (0);
 }
