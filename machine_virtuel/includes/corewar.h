@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/27 17:29:13 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/01 19:57:14 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define COREWAR_H
 
 # include "libft.h"
-# include "players.h"
 # include "../../op.h"
 # include <fcntl.h>
 # include <sys/types.h>
@@ -23,6 +22,18 @@
 # define FALSE 0
 
 # define BYTE_START_CODE 2192
+
+typedef struct s_player	t_player;
+struct					s_player
+{
+	char				*name;
+	char				*comment;
+	char				*path;
+	unsigned long		size;
+	int					start;
+	int					size_func;
+	char				*file;
+};
 
 typedef struct s_flag	t_flag;
 struct					s_flag
@@ -43,13 +54,19 @@ struct					s_env
 	t_player			players[MAX_PLAYERS];
 	int					active_players;
 	t_arena				arena;
-
 };
-
-# include "n_curse.h"
 
 void		vm_error(char *str);
 void		parsing_arg(char **arg, t_env *e);
 void		reading_file(t_env *e, int x);
 void		read_instruction(t_env *e, int x);
+
+int			instruct_tab_value(char *str);
+int			get_func_method(int jump, char **action_, char *tmp);
+//Players
+char	*read_comment(char *file_player);
+char	*read_name(char *file_player);
+char	*print_hexa(unsigned char c, int byte);
+void	hex_to_bin_quad(char *str_1);
+//Players
 #endif

@@ -6,14 +6,11 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:19:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/28 19:15:11 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/01 20:13:50 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_curse.h"
-
-char tab[MEM_SIZE];
-char tab2[MEM_SIZE];
 
 void	print_char(char c, int nb)
 {
@@ -70,7 +67,7 @@ void	print_tab()
 	}
 }
 
-void	afficher_tab()
+void	print_ncurse()
 {
 	printf(""CLEAR"");
 	printf(""GREY_BACK"");
@@ -110,12 +107,10 @@ void	n_curse(t_env *e)
 {
 	int			x;
 
-	x = 0;
+	x = -1;
 	init_curse();
-	while (x < e->active_players)
-	{
+	while (++x < e->active_players)
 		put_player(e, x);
-		x++;
-	}
-	afficher_tab();
+	// print_ncurse();
+	lets_play(e);
 }

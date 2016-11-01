@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:57:55 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/28 19:40:01 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/01 17:37:49 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,33 @@ void	get_flag_prog(char *arg, t_env *e)
 
 void	get_pos_champion(t_env *e, int size_total)
 {
-	// int		x;
-	// int		size;
-
 	(void)size_total;
 	printf("----%d\n", MEM_SIZE - e->players[0].size_func);
+	if (e->active_players == 2)
+	{
+		e->players[0].start = 0;
+		e->players[1].start = ((MEM_SIZE + e->players[0].size_func) / 2) - (e->players[0].size_func / 2);
+	}
+	else if (e->active_players == 3)
+	{
+		e->players[0].start = 0;
+		e->players[1].start = ((MEM_SIZE + e->players[0].size_func) / 2) - (e->players[1].size_func / 2) - 1;
+		e->players[2].start = ((MEM_SIZE + e->players[0].size_func) ) - (e->players[1].size_func / 2) - (e->players[1].size_func / 2);
+	}
+	else if (e->active_players == 4)
+	{
+		int		size;
 
-	e->players[0].start = 0;
-	// e->players[1].start = 50;
-	e->players[1].start = ((MEM_SIZE - e->players[0].size_func) / 2) + e->players[0].size_func;
+		size = e->players[0].size_func + e->players[1].size_func + e->players[2].size_func + e->players[3].size_func;
+		size =  MEM_SIZE + size / 4;
+		e->players[0].start = 0;
+		e->players[1].start = e->players[0].start + e->players[0].size_func;
+		e->players[2].start = e->players[1].start + e->players[1].size_func;
+		e->players[3].start = e->players[2].start + e->players[2].size_func;
+
+	}
 	printf("Taille entre les deux %d\n", abs(e->players[0].size_func - e->players[1].start));
 	printf("---{%d}\n", (MEM_SIZE - e->players[0].size_func - e->players[1].size_func) / 2);
-	// e->players[2].start = MEM_SIZE - 1382;
-	// e->players[3].start = MEM_SIZE - (e->players[1].size_func);
-	// e->players[3].start = e->players[2].start - e->players[1].start;
-	// x = 0;
-	// if (e->active_players > 1)
-	// {
-	// 	size = ((MEM_SIZE - size_total) / e->active_players + 1);
-	// 	printf("size %d -- %d\n", size, MEM_SIZE);
-	// 	while (x < e->active_players)
-	// 	{
-	// 		e->players[x].start = 250;
-	// 		x++;
-	// 	}
-	// }
 }
 
 void	parsing_arg(char **arg, t_env *e)
@@ -101,6 +103,8 @@ void	parsing_arg(char **arg, t_env *e)
 		x++;
 		printf("\n");
 	}
+	if (MEM_SIZE < size_total)
+		vm_error("Not enough space available.");
 	get_pos_champion(e, size_total);
 	return ;
 }
