@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:19:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/01 20:13:50 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/02 14:12:27 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_curse()
 	{
 		tab[n] = '0';
 		tab2[n] = '0';
+		tab3[n] = '-';
 		n++;
 	}
 }
@@ -46,16 +47,25 @@ void	print_tab()
 	{
 		if (pair == 0)
 			printf(""GREY_BACK"*"NORM_BACK" ");
-		if (tab2[x] == 1)
+		if (tab2[x] == 1 && tab3[x] == '-')
 			printf(""GREEN"%c"NORM"", tab[x]);
-		else if (tab2[x] == 2)
+		else if (tab2[x] == 2 && tab3[x] == '-')
 			printf(""RED"%c"NORM"", tab[x]);
-		else if (tab2[x] == 3)
+		else if (tab2[x] == 3 && tab3[x] == '-')
 			printf(""YELLOW"%c"NORM"", tab[x]);
-		else if (tab2[x] == 4)
+		else if (tab2[x] == 4 && tab3[x] == '-')
 			printf(""PURPLE"%c"NORM"", tab[x]);
 		else
 			printf("%c", tab[x]);
+		// else if (tab2[x] == 4 && tab3[x] != '0')
+		// 	printf(""PURPLE_SELECT"%c"NORM_BACK"", tab[x]);
+			// else if (tab2[x] == 1 && tab3[x] != '0')
+			// 	printf(""GREEN_SELECT"%c"NORM_BACK"", tab[x]);
+			// else if (tab2[x] == 2 && tab3[x] != '0')
+			// 	printf(""RED_SELECT"%c"NORM_BACK"", tab[x]);
+			// else if (tab2[x] == 3 && tab3[x] != '0')
+				// printf(""YELLOW_SELECT"%c"NORM_BACK"", tab[x]);
+
 		if (pair % 2 == 1)
 			printf(" ");
 		pair++;
@@ -69,7 +79,7 @@ void	print_tab()
 
 void	print_ncurse()
 {
-	printf(""CLEAR"");
+	// printf(""CLEAR"");
 	printf(""GREY_BACK"");
 	print_char('*', 168);
 	printf("\n*"NORM_BACK"");

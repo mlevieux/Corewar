@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/21 17:13:17 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/01 18:50:43 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/02 13:13:20 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,5 @@
 
 # include "corewar.h"
 
-void	lets_play(t_env *e);
 
 #endif
