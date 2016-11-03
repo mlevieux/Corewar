@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:19:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/03 16:53:40 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/03 16:07:56 by viko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,50 +47,62 @@ void	print_tab()
 	while (x < MEM_SIZE)
 	{
 		if (pair == 0)
-			printf(""GREY_BACK"*"NORM_BACK" ");
+			printw("*");
 
 		if (tab2[x] == 1 && tab3[x] == '-')
-			printf(""GREEN"%c"NORM"", tab[x]);
+		{
+			attron(COLOR_PAIR(2));
+			printw("%c", tab[x]);
+			attroff(COLOR_PAIR(2));
+
+		}
 		else if (tab2[x] == 2 && tab3[x] == '-')
-			printf(""RED"%c"NORM"", tab[x]);
+			printw("%c", tab[x]);
 		else if (tab2[x] == 3 && tab3[x] == '-')
-			printf(""YELLOW"%c"NORM"", tab[x]);
+			printw("%c", tab[x]);
 		else if (tab2[x] == 4 && tab3[x] == '-')
-			printf(""PURPLE"%c"NORM"", tab[x]);
+			printw("%c", tab[x]);
 		else if (tab2[x] == 1 && tab3[x] != '-')
 		{
-			printf(""GREEN_SELECT"%c"NORM_BACK"", tab[x]);
+			printw("%c", tab[x]);
 			tab3[x] = '-';
 		}
 		else
-			printf("%c", tab[x]);
+			printw("%c", tab[x]);
 		if (pair % 2 == 1)
-			printf(" ");
+			printw(" ");
 		pair++;
 		x++;
 		if (pair == 110) {
-			printf(""GREY_BACK"*"NORM_BACK"\n");
+			printw("*\n");
 			pair = 0;
 		}
 	}
+	printw("\n");
 }
 
 void	print_ncurse()
 {
+	start_color();
+	init_color(COLOR_RED, 143, 143, 143);
+	init_color(COLOR_GREEN, 50, 205, 50);
+	init_pair(1, COLOR_WHITE, COLOR_RED);
+	init_pair(2, COLOR_WHITE, COLOR_GREEN);
+	attron(COLOR_PAIR(1));
 	// printf(""CLEAR"");
 	// printw(""GREY_BACK"");
-	printw("TEST");
-	print_char('*', 168);
-	// printw("\n*"NORM_BACK"");
+	print_char('_', 168);
+	printw("\n|");
 	print_char(' ', 166);
-	// printw(""GREY_BACK"*"NORM_BACK"\n");
-	// print_tab();
-	// printw(""GREY_BACK"*"NORM_BACK"");
-	print_char(' ', 125);
-	// printw(""GREY_BACK"*\n");
-	print_char('*', 168);
+	printw("|\n");
+	print_tab();
+	printw("|");
+	print_char(' ', 166);
+	printw("|\n");
+	print_char('_', 168);
 	// printw(""NORM_BACK"");
-	// printw("\n");
+	printw("\n");
+	attroff(COLOR_PAIR(1));
 
 }
 
@@ -112,6 +124,22 @@ void	put_player(t_env *e, int x)
 		free(tmp);
 	}
 }
+void draw_borders(WINDOW *screen) {
+	int x, y, i;
+	getmaxyx(screen, y, x);
+	mvwprintw(screen, 0, 0, "+");
+	mvwprintw(screen, y - 1, 0, "+");
+	mvwprintw(screen, 0, x - 1, "+");
+	mvwprintw(screen, y - 1, x - 1, "+");
+	for (i = 1; i < (y - 1); i++) {
+		mvwprintw(screen, i, 0, "|");
+		mvwprintw(screen, i, x - 1, "|");
+	}
+	for (i = 1; i < (x - 1); i++) {
+		mvwprintw(screen, 0, i, "-");
+		mvwprintw(screen, y - 1, i, "-");
+	}
+}
 
 void	n_curse(t_env *e)
 {
@@ -120,20 +148,20 @@ void	n_curse(t_env *e)
 	initscr();
 	// raw();
 
+	// nodelay(stdscr,0);
+	curs_set(0);
 	x = -1;
 	init_curse();
 	while (++x < e->active_players)
 		put_player(e, x);
 
-	// while (x != 100)
-	// {
-	// 	clear();
-	// 	test();
-	// 	// usleep(60999);
-	// 	x++;
-	// }
-	lets_play(e);
+	WINDOW *win = newwin(10,10,1,1);
+
+	draw_borders(win);
+	// wrefresh(win);
 	getch();
+	// lets_play(e);
 	endwin();
+
 
 }
