@@ -53,6 +53,19 @@ struct						s_env
 	t_func					*func; //pointeur sur struct
 };
 
+typedef struct				s_op
+{
+	char					*name;
+	int						nb_param;
+	char					params_types[4];
+	int						opcode;
+	int						nb_tours;
+	char					*order;
+	char					params_byte;
+	char					index_size;
+	t_list					*next;
+}							t_op;
+
 void	open_line(char *fichier, t_env *e);
 
 
