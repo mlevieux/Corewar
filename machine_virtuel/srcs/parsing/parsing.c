@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:57:55 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/01 17:37:49 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/03 16:26:44 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	get_pos_champion(t_env *e, int size_total)
 		e->players[3].start = e->players[2].start + e->players[2].size_func;
 
 	}
-	printf("Taille entre les deux %d\n", abs(e->players[0].size_func - e->players[1].start));
-	printf("---{%d}\n", (MEM_SIZE - e->players[0].size_func - e->players[1].size_func) / 2);
+	// printf("Taille entre les deux %d\n", abs(e->players[0].size_func - e->players[1].start));
+	// printf("---{%d}\n", (MEM_SIZE - e->players[0].size_func - e->players[1].size_func) / 2);
 }
 
 void	parsing_arg(char **arg, t_env *e)

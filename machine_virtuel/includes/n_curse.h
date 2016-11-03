@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:26:39 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/02 13:40:42 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/03 16:52:35 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "corewar.h"
 # include "game.h"
+# include <ncurses.h>
 
 char tab[MEM_SIZE];
 char tab2[MEM_SIZE];

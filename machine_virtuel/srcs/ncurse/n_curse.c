@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:19:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/02 14:12:27 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/03 16:53:40 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_char(char c, int nb)
 		return ;
 	while (nb != 0)
 	{
-		printf("%c", c);
+		printw("%c", c);
 		nb--;
 	}
 }
@@ -41,12 +41,14 @@ void	print_tab()
 {
 	int		pair;
 	int		x = 0;
+	// int		done = 2;
 
 	pair = 0;
 	while (x < MEM_SIZE)
 	{
 		if (pair == 0)
 			printf(""GREY_BACK"*"NORM_BACK" ");
+
 		if (tab2[x] == 1 && tab3[x] == '-')
 			printf(""GREEN"%c"NORM"", tab[x]);
 		else if (tab2[x] == 2 && tab3[x] == '-')
@@ -55,17 +57,13 @@ void	print_tab()
 			printf(""YELLOW"%c"NORM"", tab[x]);
 		else if (tab2[x] == 4 && tab3[x] == '-')
 			printf(""PURPLE"%c"NORM"", tab[x]);
+		else if (tab2[x] == 1 && tab3[x] != '-')
+		{
+			printf(""GREEN_SELECT"%c"NORM_BACK"", tab[x]);
+			tab3[x] = '-';
+		}
 		else
 			printf("%c", tab[x]);
-		// else if (tab2[x] == 4 && tab3[x] != '0')
-		// 	printf(""PURPLE_SELECT"%c"NORM_BACK"", tab[x]);
-			// else if (tab2[x] == 1 && tab3[x] != '0')
-			// 	printf(""GREEN_SELECT"%c"NORM_BACK"", tab[x]);
-			// else if (tab2[x] == 2 && tab3[x] != '0')
-			// 	printf(""RED_SELECT"%c"NORM_BACK"", tab[x]);
-			// else if (tab2[x] == 3 && tab3[x] != '0')
-				// printf(""YELLOW_SELECT"%c"NORM_BACK"", tab[x]);
-
 		if (pair % 2 == 1)
 			printf(" ");
 		pair++;
@@ -80,18 +78,20 @@ void	print_tab()
 void	print_ncurse()
 {
 	// printf(""CLEAR"");
-	printf(""GREY_BACK"");
+	// printw(""GREY_BACK"");
+	printw("TEST");
 	print_char('*', 168);
-	printf("\n*"NORM_BACK"");
+	// printw("\n*"NORM_BACK"");
 	print_char(' ', 166);
-	printf(""GREY_BACK"*"NORM_BACK"\n");
-	print_tab();
-	printf(""GREY_BACK"*"NORM_BACK"");
+	// printw(""GREY_BACK"*"NORM_BACK"\n");
+	// print_tab();
+	// printw(""GREY_BACK"*"NORM_BACK"");
 	print_char(' ', 125);
-	printf(""GREY_BACK"*\n");
+	// printw(""GREY_BACK"*\n");
 	print_char('*', 168);
-	printf(""NORM_BACK"");
-	printf("\n");
+	// printw(""NORM_BACK"");
+	// printw("\n");
+
 }
 
 void	put_player(t_env *e, int x)
@@ -117,10 +117,23 @@ void	n_curse(t_env *e)
 {
 	int			x;
 
+	initscr();
+	// raw();
+
 	x = -1;
 	init_curse();
 	while (++x < e->active_players)
 		put_player(e, x);
-	// print_ncurse();
+
+	// while (x != 100)
+	// {
+	// 	clear();
+	// 	test();
+	// 	// usleep(60999);
+	// 	x++;
+	// }
 	lets_play(e);
+	getch();
+	endwin();
+
 }
