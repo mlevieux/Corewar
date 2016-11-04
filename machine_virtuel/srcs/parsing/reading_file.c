@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/21 18:07:34 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/28 18:10:38 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/04 13:16:15 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	reading_file(t_env *e, int x)
 	if ((fd = open(e->players[x].path, O_RDONLY)) < 0)
 		vm_error("Error file.");
 	e->players[x].file = get_content(fd, NULL, buf);
-	e->players[x].size = lseek(fd, 0,SEEK_END);
+	e->players[x].size = lseek(fd, 0, SEEK_END);
 	close(fd);
 	e->players[x].name = read_name(e->players[x].file);
 	e->players[x].comment = read_comment(e->players[x].file);

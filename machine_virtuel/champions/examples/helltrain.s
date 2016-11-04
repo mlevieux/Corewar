@@ -4,6 +4,26 @@
 .name		"helltrain"
 .comment	"choo-choo, motherf*****s !"
 
+entry:
+	sti		r1, %:beegees_gen, %1
+	sti		r1, %:beegees, %1
+	sti		r1, %:cc_spawn, %1
+	sti		r1, %:wall, %1
+	sti		r1, %:cc4, %1
+	sti		r1, %:cc4, %9
+	sti		r1, %:cc4, %17
+	sti		r1, %:cc4l, %1
+	sti		r1, %:cc4ld, %2
+	sti		r1, %:cc3, %1
+	sti		r1, %:cc3, %9
+	sti		r1, %:cc2, %1
+	ld		%0, r16
+	fork	%:cc_spawn
+
+wall_prep:
+	ld		%0, r2
+	ld		%0, r16
+
 wall:
 	live	%4902343
 	st		r2, -24

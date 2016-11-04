@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/03 16:28:28 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/04 15:34:22 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../../op.h"
 # include <fcntl.h>
 # include <sys/types.h>
+# include <display.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -54,6 +55,7 @@ struct					s_env
 	t_player			players[MAX_PLAYERS];
 	int					active_players;
 	t_arena				arena;
+	t_window			window;
 };
 
 void		vm_error(char *str);
