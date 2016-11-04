@@ -14,6 +14,8 @@
 # define PARSING_H
 
 # include "corewar.h"
+# include "../../op.h"
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,35 +24,16 @@
 #include <fcntl.h>
 
 
-// typedef struct s_line		t_line;
-// struct						s_line
-// {
-// 	char					*method; // sti and live zjmp
-// 	char					*info1;
-// 	char					*info2;
-// 	char					*info3;
-// 	int						nb_info;
-// 	struct s_line			*next;
-// };
 
-typedef struct s_func		t_func;
-struct						s_func
+typedef struct s_line		t_line;
+struct						s_line
 {
-	// char					*label; // l2: ou live;
-	// t_line					*line; //pointeur sur struct
-	char					*line;
-	struct s_func			*next;
-};
-
-typedef struct s_env		t_env;
-struct						s_env
-{
-	char					*name; // .name
-	char					*comment; // .comment
-	char					*name_file; //nom du .cor en sortie
-	int						suite; // instruction fini ou non
-	int						y_line;
-	t_func					*func; //pointeur sur struct
+	char					*method; // sti and live zjmp
+	char					*info1;
+	char					*info2;
+	char					*info3;
+	int						nb_info;
+	struct s_line			*next;
 };
 
 typedef struct				s_op
@@ -60,13 +43,42 @@ typedef struct				s_op
 	char					params_types[4];
 	int						opcode;
 	int						nb_tours;
-	char					*order;
+	char					*full_name;
 	char					params_byte;
 	char					index_size;
-	t_list					*next;
 }							t_op;
 
+typedef struct s_func		t_func;
+struct						s_func
+{
+	char					*label; // l2: ou live;
+	t_line					*line; //pointeur sur struct
+	struct s_func			*next;
+};
+
+
+typedef struct s_env		t_env;
+struct						s_env
+{
+	char					*name; // .name
+	char					*comment; // .comment
+	char					*name_file; //nom du .cor en sortie
+	int						suite; // instruction fini ou non
+	int						y_line;
+	t_func					*head; //pointeur sur la tete
+	t_func					*tail; // pointeur sur la queue
+	t_op					op_tab[17];
+};
+
+
 void	open_line(char *fichier, t_env *e);
+void	fille_op_tab(t_env *env);
+void		recup_label(char *str, t_env *e);
+void		push_tail_label(t_func **begin_list, t_func **end_list, void *data);
+void		push_tail_method(t_line **begin_list, char **tab, int nb_arg);
+
+
+
 
 
 

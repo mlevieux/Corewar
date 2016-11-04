@@ -12,15 +12,6 @@
 
 #include "corewar.h"
 
-
-// typedef struct		header_s
-// {
-//   unsigned int		magic;
-//   char				prog_name[PROG_NAME_LENGTH + 1];
-//   unsigned int		prog_size;
-//   char				comment[COMMENT_LENGTH + 1];
-// }					header_t;
-
 unsigned int	little_to_big(unsigned int little)
 {
 	unsigned int	big;
@@ -47,6 +38,7 @@ void	create_file(t_env *e)
 	if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
 		ft_printf("%s\n", e->name_file);
 	write(fd, &header, sizeof(header));
+	
 	if (close(fd) != 0)
 		asm_error("close_error_.cor");
 }
@@ -56,7 +48,8 @@ void	init_env(t_env *e)
 	e->name = NULL;
 	e->comment = NULL;
 	e->name_file = NULL;
-	e->func = NULL;
+	e->head = NULL;
+	e->tail = NULL;
 	e->suite = 0;
 	e->y_line = 0;
 }
@@ -89,6 +82,18 @@ char	*parsename(char *argv)
 	return (name_file);
 }
 
+void	print_all_info(t_line *head)
+{
+	t_line	*tmp;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		// printf("%s\n", tmp->method);
+		printf("%s %s %s %s\n", tmp->method, tmp->info1, tmp->info2, tmp->info3);
+		tmp = tmp->next;
+	}
+}
 void	print_all(t_func *head)
 {
 	t_func	*tmp;
@@ -96,7 +101,8 @@ void	print_all(t_func *head)
 	tmp = head;
 	while (tmp != NULL)
 	{
-		printf("%s\n", tmp->line);
+		printf("%s\n", tmp->label);
+		print_all_info(tmp->line);
 		tmp = tmp->next;
 	}
 }
@@ -111,8 +117,10 @@ int		main(int argc, char **argv)
 	if (!(e.name_file = parsename(argv[1])))
 		asm_error("asm: wrong file extension!");
 	printf("%s\n", e.name_file);
+	fille_op_tab(&e);
+
 	open_line(argv[1], &e);
 	create_file(&e);
-	print_all(e.func);
+	print_all(e.head);
 	return (0);
 }
