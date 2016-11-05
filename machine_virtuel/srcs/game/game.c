@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:50:40 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 04:49:40 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/05 17:06:12 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,6 @@ int		jump(int code, char *status)
 	return (jump);
 }
 
-// void	curse_player()
-// {
-// 	int		x;
-// 	char	*hex;
-// 	char	*code;
-// 	int		done;
-//
-// 	done = 0;
-// 	x = 0;
-// 	hex = malloc(sizeof(char) * 8);
-// 	code = malloc(sizeof(char) * 8);
-// 	hex[7] = '\0';
-// 	code[2] = '\0';
-// 	while (1)
-// 	{
-// 		if (tab2[x % MEM_SIZE] == 1)
-// 		{
-// 			hex[0] = tab[x % MEM_SIZE];
-// 			hex[1] = tab[x % MEM_SIZE + 1];
-// 			code[0] = tab[x % MEM_SIZE + 2];
-// 			code[1] = tab[x % MEM_SIZE + 3];
-// 			printf("%s, %s\n", status_code[instruct_tab_value(hex)], code);
-// 			if (tab3[x] == '-' && !done)
-// 			{
-// 				tab3[x] = tab[x ];
-// 				tab3[x + 1] = tab[x + 1];
-// 				done = jump(ft_atoi(code), status_code[instruct_tab_value(hex)]);
-// 			}
-// 			x += jump(ft_atoi(code), status_code[instruct_tab_value(hex)]);
-// 			usleep(70000);
-// 			if (done)
-// 				done -= 2;
-// 		}
-// 	}
-// 	return ;
-// }
 
 char	*to_opcode(char c, char c1)
 {
@@ -92,7 +56,7 @@ char	*to_opcode(char c, char c1)
 
 void	find_label(t_env *e, int x)
 {
-	char	status_code[17][8] = {"None", "live","ld","st","add","sub","and","or","xor","zjump","aff","ldi","sti","fork","lld","lldi","lfork"};
+	char	status_code[17][8] = {"None", "live", "ld", "st", "add", "sub", "and", "or", "xor", "zjump", "aff", "ldi", "sti", "fork", "lld", "lldi", "lfork"};
 	char	*label;
 	char	*size;
 
@@ -100,10 +64,10 @@ void	find_label(t_env *e, int x)
 	size = to_opcode(tab[e->players[x].position + 2], tab[e->players[x].position + 3]);
 	if (!ft_strcmp("00", label) && !ft_strcmp("00", size))
 	{
-		e->players[x].position = 0;
+		e->players[x].position = e->players[x].start;
+		e->players[x].jumptodo = 0;
 		return ;
 	}
-	mvwprintw(e->window.menu, 4+x, 90, "Test%d, %s, %s", x, status_code[instruct_tab_value(label)], size);
 	int jumpx = jump(ft_atoi(size), status_code[instruct_tab_value(label)]);
 	int index = 0;
 	while (index < jumpx)
@@ -111,21 +75,11 @@ void	find_label(t_env *e, int x)
 		mvwprintw(e->window.menu, 4+x, 120+index, "%c", tab[e->players[x].position + index]);
 		index++;
 	}
-	// e->players[x].position += jumpx;
+	mvwprintw(e->window.menu, 4+x, 90, "Test%d, %s, %s, pos.%d    ", jumpx, status_code[instruct_tab_value(label)], size, e->players[x].position);
 	e->players[x].jumptodo = jumpx;
-	// wrefresh(e->window.memory);
-	// sleep(1);
-	// printf("%d\n", e->players[x].position);
 }
 
 void	lets_play(t_env *e)
 {
-	// int		x;
-
-	// x = -1;
-	// while (++x < e->active_players)
-	// {
 	find_label(e, 0);
-
-	// }
 }

@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:58:08 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 04:46:52 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/05 17:06:08 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,13 @@ void	init_index(int *x, int *y, int *u, int *i)
 
 void	display_memory_color(t_env *e, int y, int x, int u)
 {
-	if (tab2[x] >= 1 && tab2[x] <= 4 && x == e->players[(int)tab2[x] - 1].position)
+	// if (x == 0 && e->players[(int)tab2[x] - 1].position == 0)
+	// {
+	// 	mvwprintw(e->window.menu, 5, 60, "Viko %d      ", x);
+	// 	wrefresh(e->window.menu);
+	// 	sleep(1);
+	// }
+	if (tab2[x] >= 1 && tab2[x] <= 4 && (x == e->players[(int)tab2[x] - 1].position))
 	{
 		// printf("%d - %d\n", e->players[(int)tab2[x] - 1].position, x);
 		wattron(e->window.memory, COLOR_PAIR(tab2[x] * 10));
@@ -94,32 +100,40 @@ void	display_memory(WINDOW **memory, t_env *e)
 	int		x;
 	int		u;
 	int		i;
+	int		nb = 0;
 
 	(void)i;
 	*memory = newwin(66, 194, 1, 1);
 	init_index(&x, &y, &u, &i);
 	while ((i = getch()) != 27)
 	{
-		if (x == MEM_SIZE * 2)
-			init_index(&x, &y, &u, &i);
-		if (x % 2 == 0 && x != 0)
+		if (nb >= e->active_players)
+			nb = 0;
+		while (nb < e->active_players)
 		{
-			mvwprintw(*memory, y, u, " ");
-			u++;
+			if (x == MEM_SIZE * 2)
+				init_index(&x, &y, &u, &i);
+			if (x % 2 == 0 && x != 0)
+			{
+				mvwprintw(*memory, y, u, " ");
+				u++;
+			}
+			if (u >= 193 && (u = 1))
+				y++;
+			find_label(e, nb);
+			display_memory_color(e, y, x, u);
+			x += 2;
+			if (x == MEM_SIZE * 2)
+			{
+				wrefresh(e->window.menu);
+				e->players[nb].position += e->players[nb].jumptodo;
+				wrefresh(*memory);
+				i = 0;
+				sleep(1);
+				nb++;
+			}
+			u += 2;
 		}
-		if (u >= 193 && (u = 1))
-			y++;
-		display_memory_color(e, y, x, u);
-		lets_play(e);
-		x += 2;
-		if (x == MEM_SIZE * 2)
-		{
-			wrefresh(e->window.menu);
-			wrefresh(*memory);
-			sleep(1);
-		}
-		u += 2;
-		e->players[0].position += e->players[0].jumptodo;
 	}
 }
 

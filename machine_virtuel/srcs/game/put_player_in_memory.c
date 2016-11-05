@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 00:55:52 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 02:16:51 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/05 17:06:00 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	put_player(t_env *e)
 	x = -1;
 	while (++x < e->active_players){
 		e->players[x].position = e->players[x].start;
+		e->players[x].process = (t_process*)malloc(sizeof(t_process));
+		e->players[x].process->start = e->players[x].position;
+		e->players[x].process->position = e->players[x].position;
 		player_to_tab(e, x);
 	}
 }
