@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/04 15:34:22 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/05 01:25:49 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,17 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <display.h>
+# include "players.h"
 
 # define TRUE 1
 # define FALSE 0
 
+char tab[MEM_SIZE * 2];
+char tab2[MEM_SIZE * 2];
+char tab3[MEM_SIZE * 2];
+
 # define BYTE_START_CODE 2192
 
-typedef struct s_player	t_player;
-struct					s_player
-{
-	char				*name;
-	char				*comment;
-	char				*path;
-	unsigned long		size;
-	int					start;
-	int					size_func;
-	char				*file;
-};
 
 typedef struct s_flag	t_flag;
 struct					s_flag
@@ -70,5 +64,7 @@ char	*read_comment(char *file_player);
 char	*read_name(char *file_player);
 char	*print_hexa(unsigned char c, int byte);
 void	hex_to_bin_quad(char *str_1);
+void	put_player(t_env *e);
+void	player_to_tab(t_env *e, int x);
 //Players
 #endif

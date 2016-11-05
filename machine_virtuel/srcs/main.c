@@ -6,12 +6,13 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 12:59:13 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/01 19:15:45 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/05 00:52:45 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "n_curse.h"
+#include "players.h"
 
 void	free_fighter(t_env *e)
 {
@@ -36,6 +37,8 @@ int		main(int argc, char **argv)
 	if (argc < 2)
 		vm_error("Need more argument!");
 	parsing_arg(argv, e);
+	init_curse();
+	put_player(e);
 	if (e->flag.flag_n)
 		n_curse(e);
 	free_fighter(e);

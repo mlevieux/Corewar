@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   players.h                                          :+:      :+:    :+:   */
+/*   init_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/21 17:13:17 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 04:45:41 by vlancien         ###   ########.fr       */
+/*   Created: 2016/11/05 00:52:00 by vlancien          #+#    #+#             */
+/*   Updated: 2016/11/05 00:53:24 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAYERS_H
-# define PLAYERS_H
+#include "corewar.h"
+#include "n_curse.h"
 
-# include "corewar.h"
-
-typedef struct s_player	t_player;
-struct					s_player
+void	init_curse()
 {
-	char				*name;
-	char				*comment;
-	char				*path;
-	unsigned long		size;
-	int					start;
-	int					size_func;
-	int					carry;
-	char				*file;
-	unsigned int		id_player;
-	int					position;
-	int					reg[17];
-	int					jumptodo;
-};
+	int n;
 
-#endif
+	n = 0;
+	while (n < MEM_SIZE * 2)
+	{
+		tab[n] = '0';
+		tab2[n] = '0';
+		tab3[n] = '-';
+		n++;
+	}
+}

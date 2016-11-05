@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/20 16:57:55 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/04 18:21:22 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/05 02:06:44 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	get_pos_champion(t_env *e, int size_total)
 {
 	int		size;
 
-	size = (MEM_SIZE * 2) / (e->active_playersm);
+	size = (MEM_SIZE * 2) / (e->active_players);
 	printf("active_players %d\n",MEM_SIZE * 2);
 	(void)size_total;
 	e->players[0].start = 0;
@@ -64,7 +64,6 @@ void	get_pos_champion(t_env *e, int size_total)
 		e->players[2].start = size * 2;
 	if (e->active_players >= 4)
 		e->players[3].start = size * 3;
-		// exit(1);
 }
 
 void	parsing_arg(char **arg, t_env *e)
@@ -85,6 +84,7 @@ void	parsing_arg(char **arg, t_env *e)
 		reading_file(e, x);
 		printf("Player name: %s\n", e->players[x].name);
 		printf("Player comment: %s\n", e->players[x].comment);
+		e->players[x].id_player = x;
 		size_total += e->players[x].size_func;
 		x++;
 		printf("\n");
