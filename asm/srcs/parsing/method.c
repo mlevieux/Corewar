@@ -23,6 +23,7 @@ t_line		*create_method(char **tab, int nb_arg)
 	if (list)
 	{
 		list->method = tab[0];
+		list->method_position = 0;
 		if (nb_arg >= 1)
 			list->info1 = tab[1];
 		if (nb_arg >= 2)

@@ -1,4 +1,4 @@
-NAME 						= corewar_asm
+NAME 						= asm
 
 CC							= gcc
 

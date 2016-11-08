@@ -29,6 +29,7 @@ typedef struct s_line		t_line;
 struct						s_line
 {
 	char					*method; // sti and live zjmp
+	int						method_position;
 	char					*info1;
 	char					*info2;
 	char					*info3;
@@ -51,7 +52,7 @@ typedef struct				s_op
 typedef struct s_func		t_func;
 struct						s_func
 {
-	char					*label; // l2: ou live;
+	char					*label; // nom du truc de merde
 	t_line					*line; //pointeur sur struct
 	struct s_func			*next;
 };

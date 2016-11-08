@@ -16,7 +16,7 @@ unsigned int	little_to_big(unsigned int little)
 {
 	unsigned int	big;
 
-	big = ((little >> 24 )& 0xff) | ((little << 8) & 0xff0000) |
+	big = ((little >> 24 ) & 0xff) | ((little << 8) & 0xff0000) |
 	((little >> 8) & 0xff00) | ((little << 24 )& 0xff000000);
 	return (big);
 }
@@ -31,14 +31,13 @@ void	create_file(t_env *e)
 
 	header.prog_size = 0; // a calculer
 
-
 	header.magic = little_to_big(COREWAR_EXEC_MAGIC);
 	ft_strncpy(header.prog_name ,e->name,PROG_NAME_LENGTH);
 	ft_strncpy(header.comment ,e->comment, COMMENT_LENGTH);
 	if ((fd = open(e->name_file, O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
-		ft_printf("%s\n", e->name_file);
+		ft_printf(" error open %s\n", e->name_file);
 	write(fd, &header, sizeof(header));
-	
+
 	if (close(fd) != 0)
 		asm_error("close_error_.cor");
 }
