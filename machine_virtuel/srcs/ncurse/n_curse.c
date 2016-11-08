@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:19:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 00:53:21 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/08 18:01:53 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	set_default(void)
 	initscr();
 	cbreak();
 	nodelay(stdscr, 1);
-	raw();
+	// raw();
 	noecho();
 	curs_set(0);
 }

@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 00:55:52 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 17:06:00 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/08 19:53:35 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,37 @@ void	player_to_tab(t_env *e, int x)
 	}
 }
 
+void	afficher(t_env *e)
+{
+	printf("Process .1. = {%d}\n", e->process[0]->id_player);
+	printf("Process .2. = {%d}\n", e->process[1]->id_player);
+	// printf("Process .3. = {%d}\n", e->process[2]->id_player);
+	// printf("Process .4. = {%d}\n", e->process[0].id_player);
+}
+
 void	put_player(t_env *e)
 {
+	t_process	*list;
 	int		x;
 
 	x = -1;
-	while (++x < e->active_players){
-		e->players[x].position = e->players[x].start;
-		e->players[x].process = (t_process*)malloc(sizeof(t_process));
-		e->players[x].process->start = e->players[x].position;
-		e->players[x].process->position = e->players[x].position;
+	list = NULL;
+	e->process = malloc(sizeof(t_process*));
+	e->active_process = e->active_players;
+	while (++x < e->active_players)
+	{
+		init_process(e, x);
+		e->players[x].position = e->players[x].start % (MEM_SIZE * 2);
 		player_to_tab(e, x);
+		e->process[x]->position = e->players[x].position % (MEM_SIZE * 2);
+		e->process[x]->start = e->players[x].start % (MEM_SIZE * 2);
+		e->process[x]->id_player = e->players[x].id_player;
+		printf("New process\n");
 	}
+	// e->active_process++;
+	// init_process(e, 2);
+	// e->process[2]->position = 50;
+	// e->process[2]->start = 50;
+	// e->process[2]->id_player = 1;
+	afficher(e);
 }

@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:50:40 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 17:06:12 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/08 20:05:55 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,17 @@ void	find_label(t_env *e, int x)
 	char	*label;
 	char	*size;
 
-	label = to_opcode(tab[e->players[x].position % (MEM_SIZE * 2)], tab[(e->players[x].position + 1) % (MEM_SIZE * 2)]);
-	size = to_opcode(tab[e->players[x].position + 2], tab[e->players[x].position + 3]);
-	if (!ft_strcmp("00", label) && !ft_strcmp("00", size))
-	{
-		e->players[x].position = e->players[x].start;
-		e->players[x].jumptodo = 0;
-		return ;
-	}
+	label = to_opcode(tab[e->process[x]->position % (MEM_SIZE * 2)], tab[(e->process[x]->position + 1) % (MEM_SIZE * 2)]);
+	size = to_opcode(tab[e->process[x]->position + 2], tab[e->process[x]->position + 3]);
 	int jumpx = jump(ft_atoi(size), status_code[instruct_tab_value(label)]);
 	int index = 0;
 	while (index < jumpx)
 	{
-		mvwprintw(e->window.menu, 4+x, 120+index, "%c", tab[e->players[x].position + index]);
+		mvwprintw(e->window.menu, 4+x, 120+index, "%c", tab[e->process[x]->position + index]);
 		index++;
 	}
-	mvwprintw(e->window.menu, 4+x, 90, "Test%d, %s, %s, pos.%d    ", jumpx, status_code[instruct_tab_value(label)], size, e->players[x].position);
-	e->players[x].jumptodo = jumpx;
+	mvwprintw(e->window.menu, 4+x, 90, "Test%d, %s, %s, pos.%d    ", jumpx, status_code[instruct_tab_value(label)], size, e->process[x]->position);
+	e->process[x]->jumptodo = jumpx;
 }
 
 void	lets_play(t_env *e)

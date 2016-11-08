@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:58:08 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/05 17:06:08 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/08 20:33:22 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void	display_info_menu(WINDOW **menu, t_env *e)
 	(void)e;
 	mvwprintw(*menu, 1, 165, "CYCLE_TO_DIE: ");
 	mvwprintw(*menu, 2, 165, "CYCLE_DELTA: ");
+	mvwprintw(*menu, 3, 165, "CYCLE: ");
 	wattron(e->window.menu, COLOR_PAIR(5));
 	mvwprintw(*menu, 1, 180, "%d", CYCLE_TO_DIE);
 	mvwprintw(*menu, 2, 180, "%d", CYCLE_DELTA);
+	mvwprintw(*menu, 3, 180, "%d", e->arena.cycle);
 	wattroff(e->window.menu, COLOR_PAIR(5));
 	wrefresh(*menu);
 }
@@ -70,21 +72,7 @@ void	init_index(int *x, int *y, int *u, int *i)
 
 void	display_memory_color(t_env *e, int y, int x, int u)
 {
-	// if (x == 0 && e->players[(int)tab2[x] - 1].position == 0)
-	// {
-	// 	mvwprintw(e->window.menu, 5, 60, "Viko %d      ", x);
-	// 	wrefresh(e->window.menu);
-	// 	sleep(1);
-	// }
-	if (tab2[x] >= 1 && tab2[x] <= 4 && (x == e->players[(int)tab2[x] - 1].position))
-	{
-		// printf("%d - %d\n", e->players[(int)tab2[x] - 1].position, x);
-		wattron(e->window.memory, COLOR_PAIR(tab2[x] * 10));
-		mvwprintw(e->window.memory, y, u , "%c%c", tab[x], tab[x + 1]);
- 		wattroff(e->window.memory, COLOR_PAIR(tab2[x] * 10));
-		wrefresh(e->window.memory);
-	}
-	else if (tab2[x] >= 1 && tab2[x] <= 4)
+	if (tab2[x] >= 1 && tab2[x] <= 4)
 	{
 		wattron(e->window.memory, COLOR_PAIR(tab2[x]));
 		mvwprintw(e->window.memory, y, u , "%c%c", tab[x], tab[x + 1]);
@@ -92,6 +80,22 @@ void	display_memory_color(t_env *e, int y, int x, int u)
 	}
 	else
 		mvwprintw(e->window.memory, y, u , "%c%c", tab[x], tab[x + 1]);
+}
+
+void	process_cursor(t_env *e, int nb, int y, int x, int u)
+{
+	int		process;
+
+	process = 0;
+	(void)u;
+	(void)y;
+	(void)x;
+	if (x == e->process[nb]->position)
+	{
+		wattron(e->window.memory, COLOR_PAIR(6));
+		mvwprintw(e->window.memory, y, u, "%c%c", tab[x], tab[x + 1]);
+		wattroff(e->window.memory, COLOR_PAIR(6));
+	}
 }
 
 void	display_memory(WINDOW **memory, t_env *e)
@@ -102,14 +106,14 @@ void	display_memory(WINDOW **memory, t_env *e)
 	int		i;
 	int		nb = 0;
 
-	(void)i;
 	*memory = newwin(66, 194, 1, 1);
 	init_index(&x, &y, &u, &i);
+	// printf("e->active_process = %d\n", e->active_process);
 	while ((i = getch()) != 27)
 	{
-		if (nb >= e->active_players)
+		if (nb == e->active_process)
 			nb = 0;
-		while (nb < e->active_players)
+		while (nb != e->active_process)
 		{
 			if (x == MEM_SIZE * 2)
 				init_index(&x, &y, &u, &i);
@@ -122,14 +126,19 @@ void	display_memory(WINDOW **memory, t_env *e)
 				y++;
 			find_label(e, nb);
 			display_memory_color(e, y, x, u);
+			process_cursor(e, nb, y, x, u);
 			x += 2;
 			if (x == MEM_SIZE * 2)
 			{
+				e->arena.cycle--;
 				wrefresh(e->window.menu);
-				e->players[nb].position += e->players[nb].jumptodo;
+				display_menu(&e->window.menu, e);
 				wrefresh(*memory);
+				e->process[nb]->position = (e->process[nb]->position + e->process[nb]->jumptodo) % (MEM_SIZE * 2);
 				i = 0;
-				sleep(1);
+				usleep(10000);
+				// sleep(1);
+				// printf("Work ON %d\n", nb);
 				nb++;
 			}
 			u += 2;
@@ -155,6 +164,7 @@ void	display_init_color()
 	init_pair(40, COLOR_BLACK, COLOR_RED);
 
 	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(6, COLOR_BLACK, COLOR_YELLOW);
 
 }
 
