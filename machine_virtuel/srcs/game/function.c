@@ -1,22 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.h                                             :+:      :+:    :+:   */
+/*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/01 17:54:35 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/09 16:10:57 by vlancien         ###   ########.fr       */
+/*   Created: 2016/11/09 17:37:17 by vlancien          #+#    #+#             */
+/*   Updated: 2016/11/09 17:41:29 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_H
-# define GAME_H
-
-# include "corewar.h"
-# include "players.h"
-# include "n_curse.h"
-# include <ncurses.h>
-
-void	find_label(t_env *e, int x);
-#endif
+#include "corewar.h"

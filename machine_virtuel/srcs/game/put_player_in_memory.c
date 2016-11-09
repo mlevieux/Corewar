@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 00:55:52 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/08 19:53:35 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/09 17:34:48 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,20 @@ void	player_to_tab(t_env *e, int x)
 
 void	afficher(t_env *e)
 {
-	printf("Process .1. = {%d}\n", e->process[0]->id_player);
-	printf("Process .2. = {%d}\n", e->process[1]->id_player);
-	// printf("Process .3. = {%d}\n", e->process[2]->id_player);
-	// printf("Process .4. = {%d}\n", e->process[0].id_player);
+	int			x;
+
+	x = 0;
+	while (x < e->active_process)
+	{
+		printf("Process .%d. = {%d}\n", x + 1, e->process[x]->id_player);
+		x++;
+	}
 }
 
 void	put_player(t_env *e)
 {
 	t_process	*list;
-	int		x;
+	int			x;
 
 	x = -1;
 	list = NULL;
@@ -56,12 +60,9 @@ void	put_player(t_env *e)
 		e->process[x]->position = e->players[x].position % (MEM_SIZE * 2);
 		e->process[x]->start = e->players[x].start % (MEM_SIZE * 2);
 		e->process[x]->id_player = e->players[x].id_player;
+		find_next_pc(e, x);
 		printf("New process\n");
 	}
-	// e->active_process++;
-	// init_process(e, 2);
-	// e->process[2]->position = 50;
-	// e->process[2]->start = 50;
-	// e->process[2]->id_player = 1;
+	set_process(e, e->active_process++, 2500, x - 1);
 	afficher(e);
 }

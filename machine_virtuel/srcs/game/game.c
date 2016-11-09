@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 17:50:40 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/08 20:05:55 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/09 18:26:30 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,23 @@ int		jump(int code, char *status)
 		return (16);
 	else if (code == 68 && !ft_strcmp(status, "sti"))
 		return (16);
-	// else
-	// 	vm_error("Error jump == 1");
+	else
+		return (2);
+		// vm_error("Error jump == 1");
 	return (jump);
 }
+// 10 01 00 00
+// 90
+// dircode{2},
+// 02 90 ff ff ff fa 03
+//
+// 01 Registre, Suivie d’un octet (le numéro de registre)
+// 10 Direct, Suivie de DIR_SIZE octets (la valeur directement)
+// 11 Indirect, Suivie de IND_SIZE octets (la valeur de l’indirection)
 
+// # define REG_CODE				1
+// # define DIR_CODE				2
+// # define IND_CODE				3
 
 char	*to_opcode(char c, char c1)
 {
@@ -57,23 +69,29 @@ char	*to_opcode(char c, char c1)
 void	find_label(t_env *e, int x)
 {
 	char	status_code[17][8] = {"None", "live", "ld", "st", "add", "sub", "and", "or", "xor", "zjump", "aff", "ldi", "sti", "fork", "lld", "lldi", "lfork"};
+	int		wait_time[17] = {0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10, 2, 2, 2};
 	char	*label;
 	char	*size;
+	int		jumpx;
+	int 	index;
+	int		func;
 
 	label = to_opcode(tab[e->process[x]->position % (MEM_SIZE * 2)], tab[(e->process[x]->position + 1) % (MEM_SIZE * 2)]);
+	func = instruct_tab_value(label);
 	size = to_opcode(tab[e->process[x]->position + 2], tab[e->process[x]->position + 3]);
-	int jumpx = jump(ft_atoi(size), status_code[instruct_tab_value(label)]);
-	int index = 0;
+	jumpx = jump(ft_atoi(size), status_code[func]);
+	index = 0;
 	while (index < jumpx)
 	{
-		mvwprintw(e->window.menu, 4+x, 120+index, "%c", tab[e->process[x]->position + index]);
+		mvwprintw(e->window.menu, 4 + x, 120 + index, "%c", tab[e->process[x]->position + index]);
 		index++;
 	}
-	mvwprintw(e->window.menu, 4+x, 90, "Test%d, %s, %s, pos.%d    ", jumpx, status_code[instruct_tab_value(label)], size, e->process[x]->position);
+	mvwprintw(e->window.menu, 4 + x, 90, "Test%d, %s, %s, pos.%d label{%s}   ", jumpx, status_code[func], size, e->process[x]->position, label);
 	e->process[x]->jumptodo = jumpx;
-}
-
-void	lets_play(t_env *e)
-{
-	find_label(e, 0);
+	if (func == -1 && e->process[x]->wait_time != 2)
+		e->process[x]->wait_time = 2;
+	else if (e->process[x]->wait_time <= 1 && func)
+		e->process[x]->wait_time = wait_time[func];
+	else
+		e->process[x]->wait_time--;
 }

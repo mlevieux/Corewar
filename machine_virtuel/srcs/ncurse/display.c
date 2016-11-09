@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:58:08 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/08 20:33:22 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/09 18:24:25 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,16 @@ void	display_info_menu(WINDOW **menu, t_env *e)
 	mvwprintw(*menu, 1, 165, "CYCLE_TO_DIE: ");
 	mvwprintw(*menu, 2, 165, "CYCLE_DELTA: ");
 	mvwprintw(*menu, 3, 165, "CYCLE: ");
+	mvwprintw(*menu, 4, 165, "PROCESS: ");
+	mvwprintw(*menu, 5, 165, "TIME_CYCLE: ");
+	if (e->flag.pause)
+		mvwprintw(*menu, 4, 125, "PAUSED");
 	wattron(e->window.menu, COLOR_PAIR(5));
 	mvwprintw(*menu, 1, 180, "%d", CYCLE_TO_DIE);
 	mvwprintw(*menu, 2, 180, "%d", CYCLE_DELTA);
 	mvwprintw(*menu, 3, 180, "%d", e->arena.cycle);
+	mvwprintw(*menu, 4, 180, "%d", e->active_process);
+	mvwprintw(*menu, 5, 180, "%d", e->flag.time_cycle);
 	wattroff(e->window.menu, COLOR_PAIR(5));
 	wrefresh(*menu);
 }
@@ -56,18 +62,16 @@ void	display_menu(WINDOW **menu, t_env *e)
 void	display_tab(WINDOW **tab, t_env *e)
 {
 	(void)e;
-
 	*tab = newwin(68, 196, 0, 0);
 	draw_borders(*tab);
 	wrefresh(*tab);
 }
 
-void	init_index(int *x, int *y, int *u, int *i)
+void	init_index(int *x, int *y, int *u)
 {
 	*x = 0;
 	*y = 1;
 	*u = 1;
-	*i = 0;
 }
 
 void	display_memory_color(t_env *e, int y, int x, int u)
@@ -87,14 +91,12 @@ void	process_cursor(t_env *e, int nb, int y, int x, int u)
 	int		process;
 
 	process = 0;
-	(void)u;
-	(void)y;
-	(void)x;
 	if (x == e->process[nb]->position)
 	{
 		wattron(e->window.memory, COLOR_PAIR(6));
 		mvwprintw(e->window.memory, y, u, "%c%c", tab[x], tab[x + 1]);
 		wattroff(e->window.memory, COLOR_PAIR(6));
+		wrefresh(e->window.memory);
 	}
 }
 
@@ -103,20 +105,21 @@ void	display_memory(WINDOW **memory, t_env *e)
 	int		y;
 	int		x;
 	int		u;
-	int		i;
 	int		nb = 0;
 
 	*memory = newwin(66, 194, 1, 1);
-	init_index(&x, &y, &u, &i);
-	// printf("e->active_process = %d\n", e->active_process);
-	while ((i = getch()) != 27)
+	init_index(&x, &y, &u);
+	while (key_hook(e) != 27)
 	{
 		if (nb == e->active_process)
+		{
 			nb = 0;
+			e->arena.cycle--;
+		}
 		while (nb != e->active_process)
 		{
 			if (x == MEM_SIZE * 2)
-				init_index(&x, &y, &u, &i);
+				init_index(&x, &y, &u);
 			if (x % 2 == 0 && x != 0)
 			{
 				mvwprintw(*memory, y, u, " ");
@@ -130,15 +133,17 @@ void	display_memory(WINDOW **memory, t_env *e)
 			x += 2;
 			if (x == MEM_SIZE * 2)
 			{
-				e->arena.cycle--;
-				wrefresh(e->window.menu);
 				display_menu(&e->window.menu, e);
+				while (e->flag.pause == 1 && key_hook(e) == 0);
+
 				wrefresh(*memory);
-				e->process[nb]->position = (e->process[nb]->position + e->process[nb]->jumptodo) % (MEM_SIZE * 2);
-				i = 0;
-				usleep(10000);
-				// sleep(1);
-				// printf("Work ON %d\n", nb);
+				if (e->process[nb]->wait_time - 1 == 0)
+				{
+					e->process[nb]->position = (e->process[nb]->position + e->process[nb]->jumptodo) % (MEM_SIZE * 2);
+					find_next_pc(e, nb);
+				}
+				usleep(e->flag.time_cycle);
+				wrefresh(e->window.menu);
 				nb++;
 			}
 			u += 2;
@@ -149,7 +154,6 @@ void	display_memory(WINDOW **memory, t_env *e)
 void	display_init_color()
 {
 	start_color();
-	// init_color(COLOR_CYAN, 0, 0, 255);
 
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 	init_pair(10, COLOR_WHITE, COLOR_GREEN);

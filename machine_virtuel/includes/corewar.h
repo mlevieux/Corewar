@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/08 20:04:02 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/09 18:04:18 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ char tab3[MEM_SIZE * 2];
 
 # define BYTE_START_CODE 2192
 
-
 typedef struct s_flag	t_flag;
 struct					s_flag
 {
 	int					flag_n;
+	int					time_cycle;
+	int					pause;
 };
 
 typedef struct s_arena	t_arena;
@@ -62,19 +63,24 @@ void		read_instruction(t_env *e, int x);
 
 int			instruct_tab_value(char *str);
 int			get_func_method(int jump, char **action_, char *tmp);
+
 //Players
-char	*read_comment(char *file_player);
-char	*read_name(char *file_player);
-char	*print_hexa(unsigned char c, int byte);
-void	hex_to_bin_quad(char *str_1);
-void	put_player(t_env *e);
-void	player_to_tab(t_env *e, int x);
+char		*read_comment(char *file_player);
+char		*read_name(char *file_player);
+char		*print_hexa(unsigned char c, int byte);
+void		hex_to_bin_quad(char *str_1);
+void		put_player(t_env *e);
+void		player_to_tab(t_env *e, int x);
 //Players
 
 // void		new_emptyprocess(t_process **begin_list, t_env *e);
 // void		init_temp_process(t_env *e);
+int			jump(int code, char *status);
+void		find_next_pc(t_env *e, int x);
+int			key_hook(t_env *e);
+char		*to_opcode(char c, char c1);
 void		init_process(t_env *e, int nb);
-
+void		set_process(t_env *e, int process_nb, int x, int creator);
 // int		get_process_pos(t_process *list, int x);
 // int		get_process_start(t_process *list, int x);
 // int		get_process_jumptodo(t_process *list, int x);

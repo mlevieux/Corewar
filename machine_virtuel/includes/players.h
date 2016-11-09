@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/21 17:13:17 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/08 20:03:39 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/09 16:13:41 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ struct						s_process
 	int						carry;
 	int						position;
 	int						id_player;
+	int						wait_time;
 	int						jumptodo;
+	int						addr_pc;
 	int						reg[17];
 };
 
