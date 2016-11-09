@@ -71,8 +71,8 @@ struct						s_env
 };
 
 
-void	open_line(char *fichier, t_env *e);
-void	fille_op_tab(t_env *env);
+void		open_line(char *fichier, t_env *e);
+void		fille_op_tab(t_env *env);
 void		recup_label(char *str, t_env *e);
 void		push_tail_label(t_func **begin_list, t_func **end_list, void *data);
 void		push_tail_method(t_line **begin_list, char **tab, int nb_arg);
