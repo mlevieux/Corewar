@@ -51,6 +51,7 @@ void	init_env(t_env *e)
 	e->tail = NULL;
 	e->suite = 0;
 	e->y_line = 0;
+	e->nb_tab = 16;
 }
 
 char	*parsename(char *argv)
@@ -88,8 +89,9 @@ void	print_all_info(t_line *head)
 	tmp = head;
 	while (tmp != NULL)
 	{
-		// printf("%s\n", tmp->method);
 		printf("%s %s %s %s\n", tmp->method, tmp->info1, tmp->info2, tmp->info3);
+		printf("%d\n", tmp->encod);
+
 		tmp = tmp->next;
 	}
 }

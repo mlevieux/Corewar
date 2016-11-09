@@ -136,12 +136,16 @@ int		is_command(char *str, t_env *e)
 	{
 		//printf("%s == %s\n", str, e->op_tab[i].name);
 		if (ft_strcmp(str, e->op_tab[i].name) == 0)
+		{
+			e->nb_tab = i;
 			return (e->op_tab[i].nb_param);
+		}
 		i++;
 	}
+	e->nb_tab = 16;
 	printf("Syntax error in line %d\n", e->y_line);
 	exit(1);
-	return (-1);
+	return (0);
 }
 void	other(char *str, t_env *e)
 {
@@ -166,7 +170,7 @@ void	other(char *str, t_env *e)
 		exit(1);
 	}
 	else
-		push_tail_method(&e->tail->line, tab, command);
+		push_tail_method(&e->tail->line, tab, command, e);
 
 }
 
