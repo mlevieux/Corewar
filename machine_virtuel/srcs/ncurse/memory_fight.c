@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 01:16:37 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/10 03:55:16 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/10 10:29:25 by viko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,22 @@ void	exec_process(t_env *e, int xproc)
 	if (func == 1)
 	{
 		e->process[xproc]->reg[0] = tab2[e->process[xproc]->position % (MEM_SIZE * 2)];
-		e->process[xproc]->id_player = tab2[e->process[xproc]->position % (MEM_SIZE * 2)];
 		index = 2;
 		while (index < 9) {
 			tab[(e->process[xproc]->position + index) % (MEM_SIZE * 2)] = 'F';
-			tab2[(e->process[xproc]->position + index) % (MEM_SIZE * 2)] = e->process[xproc]->id_player;
+			tab2[(e->process[xproc]->position + index) % (MEM_SIZE * 2)] = e->process[xproc]->reg[0];
 			index++;
 		}
 		tab[e->process[xproc]->position + 9 % (MEM_SIZE * 2)] = 'G' - e->process[xproc]->reg[0];
 		wrefresh(e->window.memory);
 	}
-	else if (func == -1)
-		{
-			e->process[xproc]->reg[0] = 0;
-			e->process[xproc]->id_player = 0;
-		}
+	if (func == 3)
+	{
+		e->process[xproc]->reg[0] = tab2[e->process[xproc]->position % (MEM_SIZE * 2)];
+		set_process(e, e->active_process++, e->process[xproc]->addr_pc + (e->process[xproc]->position % IDX_MOD), xproc - 1);
+		// tab[e->process[xproc]->position + 9 % (MEM_SIZE * 2)] = 'G' - e->process[xproc]->reg[0];
+		wrefresh(e->window.memory);
+	}
 	// nodelay(stdscr, 0);
 	// getch();
 }
