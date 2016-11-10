@@ -24,15 +24,20 @@
 #include <fcntl.h>
 
 
-
 typedef struct s_line		t_line;
 struct						s_line
 {
 	char					*method; // sti and live zjmp
+	int						method_position;
+	int						opcode; // code binaire de la method
+	int						nb_tab; // num dans le tab op_tab
+
+	int						nb_info; // nombre d'info
 	char					*info1;
 	char					*info2;
 	char					*info3;
-	int						nb_info;
+
+	int						encod; // code binaire des arguments
 	struct s_line			*next;
 };
 
@@ -51,7 +56,7 @@ typedef struct				s_op
 typedef struct s_func		t_func;
 struct						s_func
 {
-	char					*label; // l2: ou live;
+	char					*label; // nom du truc de merde
 	t_line					*line; //pointeur sur struct
 	struct s_func			*next;
 };
@@ -63,11 +68,12 @@ struct						s_env
 	char					*name; // .name
 	char					*comment; // .comment
 	char					*name_file; //nom du .cor en sortie
-	int						suite; // instruction fini ou non
+	int						suite; // fini ou non
 	int						y_line;
 	t_func					*head; //pointeur sur la tete
 	t_func					*tail; // pointeur sur la queue
 	t_op					op_tab[17];
+	int						nb_tab;
 };
 
 
@@ -75,7 +81,7 @@ void		open_line(char *fichier, t_env *e);
 void		fille_op_tab(t_env *env);
 void		recup_label(char *str, t_env *e);
 void		push_tail_label(t_func **begin_list, t_func **end_list, void *data);
-void		push_tail_method(t_line **begin_list, char **tab, int nb_arg);
+void		push_tail_method(t_line **begin_list, char **tab, int nb_arg, t_env *e);
 
 
 
