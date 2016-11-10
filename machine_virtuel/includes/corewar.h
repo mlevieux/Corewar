@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 13:09:50 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/09 18:04:18 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/10 01:08:39 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ struct					s_env
 	t_player			players[MAX_PLAYERS];
 	int					active_players;
 	int					active_process;
+	int					memory_data[4];
 	t_arena				arena;
 	t_window			window;
 	t_process			**process;

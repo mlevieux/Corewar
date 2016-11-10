@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 12:59:13 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/09 18:09:10 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/09 21:52:13 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,12 @@ int		main(int argc, char **argv)
 	init_curse();
 	put_player(e);
 	e->arena.cycle = CYCLE_TO_DIE;
-	// e->flag.pause = 0;
+	e->flag.pause = 0;
 	if (e->flag.flag_n)
 		n_curse(e);
 	free_fighter(e);
 	printf("END OF THE PROGRAM\n");
 	printf("Result %d\n", 2050 + (-1 % (MEM_SIZE / 8)));
 	// hex_to_bin_quad("58");
-	// free(e);
 	return (0);
 }

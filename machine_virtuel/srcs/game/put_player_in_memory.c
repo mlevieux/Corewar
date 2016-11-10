@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 00:55:52 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/09 17:34:48 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/10 03:19:16 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ void	put_player(t_env *e)
 		player_to_tab(e, x);
 		e->process[x]->position = e->players[x].position % (MEM_SIZE * 2);
 		e->process[x]->start = e->players[x].start % (MEM_SIZE * 2);
-		e->process[x]->id_player = e->players[x].id_player;
+		e->process[x]->id_player = e->players[x].id_player + 1;
+		e->process[x]->char_player = 'F' - x;
 		find_next_pc(e, x);
-		printf("New process\n");
+		printf("New process %c, id player %d\n", e->process[x]->char_player, e->process[x]->id_player);
 	}
-	set_process(e, e->active_process++, 2500, x - 1);
+	// set_process(e, e->active_process++, 2500, x - 1);
 	afficher(e);
 }

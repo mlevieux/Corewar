@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/09 12:53:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/09 17:54:34 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/10 00:29:28 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	find_next_pc(t_env *e, int x)
 		jump_size = jump(ft_atoi(size), status_code[func]);
 		if (func == -1)
 			position++;
+		free(label);
+		free(size);
 		// else
 		// {
 		// 	printf("Position = %d\n", position);
