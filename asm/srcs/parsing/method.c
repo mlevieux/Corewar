@@ -31,7 +31,8 @@ int			calculate_encod(char **tab, int nb_arg, t_env *e)
 
 	a = 1;
 	multiplicateur = 128;
-	if ((e->nb_tab) == 0 || (e->nb_tab) == 13 || (e->nb_tab) == 16 || (e->nb_tab) == 17)
+	if ((e->nb_tab) == 0 || (e->nb_tab) == 8 || (e->nb_tab) == 11 ||
+		(e->nb_tab) == 16 || (e->nb_tab) == 17)
 		return (0);
 	while (a <= nb_arg)
 	{

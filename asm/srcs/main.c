@@ -89,8 +89,15 @@ void	print_all_info(t_line *head)
 	tmp = head;
 	while (tmp != NULL)
 	{
-		printf("%s       %s %s %s\n", tmp->method, tmp->info1, tmp->info2, tmp->info3);
-		printf("%d  %d\n",tmp->opcode, tmp->encod);
+		printf("%s       %s %s %s\n", tmp->method, tmp->info1, tmp->info2, tmp->info3);		
+		printf("%d  ",tmp->opcode);
+		if (tmp->encod)
+			printf("%d", tmp->encod);
+		printf("\n");
+		printf("%d  ",tmp->opcode);
+		if (tmp->encod)
+			printf("%d", tmp->encod);
+		printf("\n");
 
 		tmp = tmp->next;
 	}
