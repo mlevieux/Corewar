@@ -6,15 +6,16 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/09 12:53:56 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/10 00:29:28 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/11 03:27:54 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game.h"
 
+extern char g_status_code[17][8];
+
 void	find_next_pc(t_env *e, int x)
 {
-	char	status_code[17][8] = {"None", "live", "ld", "st", "add", "sub", "and", "or", "xor", "zjump", "aff", "ldi", "sti", "fork", "lld", "lldi", "lfork"};
 	char	*label = NULL;
 	int		func = -1;
 	int		jump_size;
@@ -23,19 +24,14 @@ void	find_next_pc(t_env *e, int x)
 
 	while (func == -1)
 	{
-		label = to_opcode(tab[position % (MEM_SIZE * 2)], tab[(position + 1) % (MEM_SIZE * 2)]);
+		label = to_opcode(tab[position % ((MEM_SIZE) * 2)], tab[(position + 1) % ((MEM_SIZE) * 2)]);
 		func = instruct_tab_value(label);
 		size = to_opcode(tab[position + 2], tab[position + 3]);
-		jump_size = jump(ft_atoi(size), status_code[func]);
+		jump_size = jump(ft_atoi(size), g_status_code[func]);
 		if (func == -1)
 			position++;
 		free(label);
 		free(size);
-		// else
-		// {
-		// 	printf("Position = %d\n", position);
-		// 	printf("Label %s\n", label);
-		// }
 	}
 	e->process[x]->addr_pc = position + jump_size;
 }

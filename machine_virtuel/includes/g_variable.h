@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.h                                             :+:      :+:    :+:   */
+/*   g_variable.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/01 17:54:35 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/11 02:32:06 by vlancien         ###   ########.fr       */
+/*   Created: 2016/11/11 02:33:06 by vlancien          #+#    #+#             */
+/*   Updated: 2016/11/11 02:33:26 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_H
-# define GAME_H
+#ifndef G_VARIABLE_H
+# define G_VARIABLE_H
 
-# include "corewar.h"
-# include "players.h"
-# include "n_curse.h"
-# include <ncurses.h>
+char	g_status_code[17][8] = {
+	"None", "live", "ld", "st", "add", "sub", "and", "or", "xor", "zjump",
+	"aff", "ldi", "sti", "fork", "lld", "lldi", "lfork"
+};
 
-void	find_label(t_env *e, int x);
 #endif

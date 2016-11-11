@@ -1,9 +1,4 @@
 .name "zork"
 .comment "I'M ALIIIIVE"
 
-live %1
-live %1
-live %1
-live %1
-live %1
-live %1
+ld 34,r3

@@ -6,7 +6,7 @@
 #    By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 20:28:54 by vlancien          #+#    #+#              #
-#    Updated: 2016/07/07 23:33:48 by vlancien         ###   ########.fr        #
+#    Updated: 2016/11/10 22:24:33 by vlancien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ C_FILES = $(shell ls -1 $(SUB1_DIR) $(SUB2_DIR) $(SUB3_DIR) $(SUB4_DIR) | grep "
 O_FILES = $(addprefix $(O_DIR),$(C_FILES:.c=.o))
 
 all:
+	@mkdir $(O_DIR) 2> /dev/null || echo "" > /dev/null
 	@make -j4 $(NAME);
 
 $(NAME): $(O_DIR) $(O_FILES)

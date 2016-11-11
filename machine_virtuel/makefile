@@ -73,8 +73,9 @@ $(O_DIR)%.o: $(C_GAME_DIR)%.c
 		&& exit 1)
 
 clean:
-	@rm $(O_FILES) $(O_DIR2) 2> /dev/null || echo "" > /dev/null
-	@rmdir -p $(O_DIR) $(O_DIR2) 2> /dev/null || echo "" > /dev/null
+	@rm $(O_FILES) $(O_DIR) 2> /dev/null || echo "" > /dev/null
+	@rmdir -p $(O_DIR) 2> /dev/null || echo "" > /dev/null
+	@mkdir $(O_DIR)
 	@make -C $(LIBFT) clean
 
 fclean: clean

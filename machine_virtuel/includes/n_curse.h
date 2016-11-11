@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/27 17:26:39 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/10 01:22:46 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/11 04:12:24 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,13 @@ void	process_cursor(t_env *e, int y, int addr, int x);
 
 void	memory_exec(t_env *e, int *nb);
 void	memory_set_init(t_env *e, int *addr, int *y, int *x);
-void	memory_run(t_env *e);
+int		memory_run(t_env *e);
+
+char	*dec_to_hex(unsigned dec, char *hex, int len);
+
+
+void	apply_func(t_env *e, int xproc, int func);
+void	live_func(t_env *e, int xproc, int func);
+void	sub_func(t_env *e, int xproc, int func);
+void	add_func(t_env *e, int xproc, int func);
 #endif

@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 00:52:00 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/10 01:16:10 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/11 02:09:59 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void			init_process(t_env *e, int nb)
 	e->process[nb]->id_player = 0;
 	e->process[nb]->wait_time = 0;
 	e->process[nb]->addr_pc = 0;
+	e->process[nb]->live_status = 0;
 	ft_memset(e->process[nb]->reg, 0, 17);
 }
 

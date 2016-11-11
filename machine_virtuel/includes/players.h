@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/21 17:13:17 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/10 02:32:38 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/11 02:09:39 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct						s_process
 	int						reg[REG_NUMBER];
 	int						id_player;
 	int						char_player;
+	int						live_status;
 };
 
 typedef struct s_player		t_player;
