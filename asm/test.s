@@ -82,28 +82,35 @@ wall:
 	st		r2, -501
 	st		r2, -510
 	zjmp	%:wall
+#254 232 = -280
 
 beegees_gen:
 	live	%4239423
 	fork	%:beegees_gen
+#255 251 = -5
 	ld		%0, r16
 
 beegees:
 	live	%3442302
 	zjmp	%:beegees
+#255 251 = -5 
 
 cc_spawn:
 	live	%4320423
 	zjmp	%3
 	fork	%:cc_spawn
+#255 248 = -8
 
 cc4:
 	live	%4329034
 	fork	%:cc3
+#94
 	live	%3401123
 	fork	%:cc2
+#47
 	live	%4590543
 	fork	%:cc1
+#132
 cc4ld:
 	ld		%0, r2
 	ld		%251883523, r3
