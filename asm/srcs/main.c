@@ -52,6 +52,7 @@ void	init_env(t_env *e)
 	e->suite = 0;
 	e->y_line = 0;
 	e->nb_tab = 16;
+	e->method_position = 0;
 }
 
 char	*parsename(char *argv)
@@ -89,16 +90,20 @@ void	print_all_info(t_line *head)
 	tmp = head;
 	while (tmp != NULL)
 	{
-		printf("%s       %s %s %s\n", tmp->method, tmp->info1, tmp->info2, tmp->info3);		
-		printf("%d  ",tmp->opcode);
+		printf("%d    (%d  ) :        ", tmp->method_position,
+			tmp->method_total);
+		printf("%s       %s     %s      %s\n", tmp->method,
+			tmp->info1, tmp->info2, tmp->info3);		
+		printf("                    %d  ",tmp->opcode);
 		if (tmp->encod)
 			printf("%d", tmp->encod);
 		printf("\n");
-		printf("%d  ",tmp->opcode);
+		printf("                    %d  ",tmp->opcode);
 		if (tmp->encod)
 			printf("%d", tmp->encod);
+		printf("     %d         %d       %d", tmp->intfo1[1], tmp->intfo2[1], tmp->intfo3[1]);
 		printf("\n");
-
+		printf("\n");
 		tmp = tmp->next;
 	}
 }
@@ -109,6 +114,7 @@ void	print_all(t_func *head)
 	tmp = head;
 	while (tmp != NULL)
 	{
+		printf("%d          :    ", tmp->line->method_position);
 		printf("%s\n", tmp->label);
 		print_all_info(tmp->line);
 		tmp = tmp->next;
@@ -126,8 +132,9 @@ int		main(int argc, char **argv)
 		asm_error("asm: wrong file extension!");
 	printf("%s\n", e.name_file);
 	fille_op_tab(&e);
-
 	open_line(argv[1], &e);
+
+
 	create_file(&e);
 	print_all(e.head);
 	return (0);

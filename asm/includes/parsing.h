@@ -28,14 +28,18 @@ typedef struct s_line		t_line;
 struct						s_line
 {
 	char					*method; // sti and live zjmp
-	int						method_position;
+	int						method_position; // position en octe de l'info
+	int						method_total;
 	int						opcode; // code binaire de la method
 	int						nb_tab; // num dans le tab op_tab
 
 	int						nb_info; // nombre d'info
 	char					*info1;
+	int						intfo1[2]; // info transformer en int_fo
 	char					*info2;
+	int						intfo2[2];
 	char					*info3;
+	int						intfo3[2];
 
 	int						encod; // code binaire des arguments
 	struct s_line			*next;
@@ -73,6 +77,9 @@ struct						s_env
 	t_func					*head; //pointeur sur la tete
 	t_func					*tail; // pointeur sur la queue
 	t_op					op_tab[17];
+
+	int						method_position;
+	int						method_total;
 	int						nb_tab;
 };
 
