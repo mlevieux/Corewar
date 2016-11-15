@@ -6,7 +6,7 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/01 10:35:42 by vlancien          #+#    #+#             */
-/*   Updated: 2016/10/26 06:03:11 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/15 13:11:17 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!(res = (char*)malloc(sizeof(char) * (length + 1))))
 		return (NULL);
 	length = 0;
-	while (s1[length])
+	while (s1[length] != '\0')
 	{
 		res[length] = s1[length];
 		length++;
 	}
 	i = 0;
-	while (s2[i])
+	while (s2[i] != '\0')
 	{
 		res[length + i] = s2[i];
 		i++;

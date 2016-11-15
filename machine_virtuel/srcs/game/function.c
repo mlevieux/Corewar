@@ -6,13 +6,14 @@
 /*   By: vlancien <vlancien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/09 17:37:17 by vlancien          #+#    #+#             */
-/*   Updated: 2016/11/11 04:59:03 by vlancien         ###   ########.fr       */
+/*   Updated: 2016/11/15 13:31:22 by vlancien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "n_curse.h"
+void	ld_func(t_env *e, int xproc, int func);
 
-void	(*g_func_process[5])(t_env*, int, int) = {live_func, live_func, live_func, add_func, sub_func};
+void	(*g_func_process[5])(t_env*, int, int) = {live_func, live_func, ld_func, add_func, sub_func};
 
 void	apply_func(t_env *e, int xproc, int func)
 {
@@ -20,29 +21,56 @@ void	apply_func(t_env *e, int xproc, int func)
 		g_func_process[func - 1](e, xproc, func);
 }
 
+char	*get_op_str(char c, char c1)
+{
+	char	*str;
+
+	str = malloc(sizeof(char) * 3);
+	str[0] = c;
+	str[1] = c1;
+	str[2] = '\0';
+	printf("{{%s}}\n", str);
+	return (str);
+}
+
+int check_jump(t_env *e, char *op_size)
+{
+	int		index = 0;
+	int		t_dir = 0;
+	int		t_ind = 0;
+	int		t_reg = 0;
+
+	(void)e;
+	printf("OPsize %s\n", op_size);
+	if (ft_strlen(op_size) != 8)
+		return (-1);
+	while (op_size[index] != '\0')
+	{
+		if (op_size[index] == '0' && op_size[index + 1] == '1')
+			t_reg++;
+		else if (op_size[index] == '1' && op_size[index + 1] == '0')
+			t_dir++;
+		else if (op_size[index] == '1' && op_size[index + 1] == '1')
+			t_ind++;
+		index += 2;
+	}
+	printf("t_dir = %d\nt_reg = %d\nt_ind = %d\n", t_dir, t_reg, t_ind);
+	return (0);
+}
+
 void	ld_func(t_env *e, int xproc, int func)
 {
-	char	number[1][4];
-	// char	regist[1][2];
-	// char	reg_result[1][4];
+	char	*op_size;
 	int		index;
 
 	(void)func;
 	index = 4;
-	while (index < 8)
-	{
-		number[0][index - 4] = tab[(e->process[xproc]->position + index) % ((MEM_SIZE) * 2)];
-		index++;
-	}
+	op_size = hex_to_bin_quad(get_op_str(tab[(e->process[xproc]->position + 2) % ((MEM_SIZE) * 2)], tab[(e->process[xproc]->position + 3) % ((MEM_SIZE) * 2)]));
+	check_jump(e, op_size);
+	
+	nodelay(stdscr, 0);
+	getch();
 
-	// char *nb = dec_to_hex(ft_atoi(number), NULL, 0);
-	// regist[0][0] = index;
-	// regist[0][1] = index + 1;
-	// reg_result[0][0] = tab[(e->process[xproc]->addr_pc + (nb % IDX_MOD)) % ((MEM_SIZE) * 2)];
-	// reg_result[0][1] = tab[(e->process[xproc]->addr_pc + (nb % IDX_MOD)) + 1 % ((MEM_SIZE) * 2)];
-	// reg_result[0][2] = tab[(e->process[xproc]->addr_pc + (nb % IDX_MOD)) + 2 % ((MEM_SIZE) * 2)];
-	// reg_result[0][3] = tab[(e->process[xproc]->addr_pc + (nb % IDX_MOD)) + 3 % ((MEM_SIZE) * 2)];
-	// e->process[xproc]->reg[regist] = reg_result;
 }
 
 void	live_func(t_env *e, int xproc, int func)
